@@ -1,0 +1,332 @@
+.container {
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+	width: 100%
+}
+  @media (min-width: 576px) {
+    .container {
+      max-width: 540px; } }
+  @media (min-width: 768px) {
+    .container {
+      max-width: 720px; } }
+  @media (min-width: 992px) {
+    .container {
+      max-width: 960px; } }
+  @media (min-width: 1200px) {
+    .container {
+      max-width: 1140px; } }
+
+.container-fluid {
+	width: 100%;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+.row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px; }
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12, .col,
+.col-auto {
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px; }
+
+.col {
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%; }
+
+.col-auto {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  width: auto;
+  max-width: none; }
+
+.col-1 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 8.33333%;
+  flex: 0 0 8.33333%;
+  max-width: 8.33333%; }
+
+.col-2 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 16.66667%;
+  flex: 0 0 16.66667%;
+  max-width: 16.66667%; }
+
+.col-3 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  max-width: 25%; }
+
+.col-4 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 33.33333%;
+  flex: 0 0 33.33333%;
+  max-width: 33.33333%; }
+
+.col-5 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 41.66667%;
+  flex: 0 0 41.66667%;
+  max-width: 41.66667%; }
+
+.col-6 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 50%;
+  flex: 0 0 50%;
+  max-width: 50%; }
+
+.col-7 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 58.33333%;
+  flex: 0 0 58.33333%;
+  max-width: 58.33333%; }
+
+.col-8 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 66.66667%;
+  flex: 0 0 66.66667%;
+  max-width: 66.66667%; }
+
+.col-9 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 75%;
+  flex: 0 0 75%;
+  max-width: 75%; }
+
+.col-10 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 83.33333%;
+  flex: 0 0 83.33333%;
+  max-width: 83.33333%; }
+
+.col-11 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 91.66667%;
+  flex: 0 0 91.66667%;
+  max-width: 91.66667%; }
+
+.col-12 {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: 100%; }
+.col-fix {
+	margin-left: -15px;
+	margin-right: -15px
+}
+
+/* Table Design */
+
+.form-control {
+	line-height: 1.5;
+	margin-bottom: 10px
+}
+input[type=file] {
+  line-height: 3
+}
+input, select, textarea {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+input[type=submit] {
+    width: auto;
+    box-shadow: none;
+}
+.save-btn {
+  line-height: 26px;
+  height: 30px;
+  min-width: 100px;
+  font-size: 11px;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 0 15px;
+}
+.comm-btn {
+  line-height: 30px;
+  height: 35px;
+  min-width: 200px;
+  font-size: 14px;
+  border-radius: 50px;
+  cursor: pointer;
+  float: right;
+  padding: 0 15px;
+}
+input::placeholder {
+  color: gray;
+}
+input, select, textarea {
+  background: #ecf0f3;
+  padding-left: 20px;
+  height: 30px;
+  font-size: 11px;
+  border-radius: 50px;
+  box-shadow: inset 2px 3px 3px #cbced1, inset -2px -3px 3px #fff
+}
+textarea {
+  height: 100px!important;
+  border-radius: 10px!important;
+  line-height: 3!important
+}
+input[type=checkbox] {
+  height: 15px;
+  font-size: 11px;
+  border-radius: 0;
+  margin-top: 2px;
+  margin-bottom: 10px;
+  box-shadow: none;
+  display: initial;
+  width: auto;
+}
+.barcode-view {
+    border: 1px solid #ccc;
+    padding: 40px 50px;
+}
+
+.tbl-action-btn {
+	display: block;
+	width: 100%;
+	margin-bottom: 15px;
+	overflow: hidden;
+}
+
+.tbl-1 {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+}
+.tbl-1 th, td {
+  padding: 7px;
+  text-align: center;
+}
+.tbl-1 th {
+  text-align: center;
+}
+.tbl-1 tbody td {
+  position: relative;
+}
+.tbl-1 tbody td:hover:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -9999px;
+  bottom: -9999px;
+  z-index: -1;
+}
+
+.tbl-2 {
+  width: 100%
+}
+.tbl-2 thead tr, .tbl-2 tbody tr {
+  text-align: center;
+}
+.tbl-2 th,td {
+  padding: 5px 0
+}
+
+.tbl-3 {
+  width: 100%
+}
+.tbl-3 thead tr, .tbl-3 tbody tr {
+  text-align: left;
+}
+.tbl-3 thead th,td {
+  padding: 5px 0;
+  text-align: center;
+}
+.tbl-3 tbody td {
+  text-align: left;
+  padding: 5px 10px;
+}
+.tbl-3 tfoot th {
+  padding: 5px 10px;
+  text-align: right;
+}
+.tbl-3 .form-control {
+  margin-bottom: 0
+}
+
+.tbl-4 {
+	width: 100%
+}
+.tbl-4 thead tr, .tbl-4 tbody tr {
+	text-align: center;
+}
+.tbl-4 thead th {
+  padding: 5px 0;
+  text-align: center;
+}
+.tbl-4 tbody td {
+  text-align: center;
+  padding: 0 10px;
+}
+.tbl-4 tfoot th {
+  padding: 0 10px;
+  text-align: center;
+}
+.tbl-4 .form-control {
+  margin-bottom: 0
+}
+
+.tbl-5 {
+  width: 100%
+}
+.tbl-5 tr th {
+  text-align: right;
+}
+.tbl-5 tr td {
+  text-align: left;
+}
+.tbl-5 th,td {
+  padding: 5px 15px
+}
+
+
+/* Tabs Design */
+
+.tv-content {
+  display: none;
+}
+.tv-radio {
+  display: none;
+}
+.tv-radio:checked + .tv-content {
+  display: block;
+}
+.tv-tab {
+  display: inline-block;
+  cursor: pointer;
+  padding: 8px;
+  margin-bottom: 3px
+}
+.tv-tab:hover {
+  opacity: 0.9;
+}
+.tv-content {
+  padding: 10px;
+  max-width: 100%;
+  box-shadow: 1px 1px rgba(0,0,0,0.1)
+}

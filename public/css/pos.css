@@ -1,0 +1,207 @@
+.pos-cust {
+	background-color: #00BFFF;
+	color: #fff;
+	width: 80%;
+	height: 30px;
+	padding: 0 15px;
+	line-height: 30px;
+	float: left;
+}
+.add-cust-btn {
+	background-color: #5CB3FF;
+	color: #fff;
+	font-size: 20px;
+	width: 10%;
+	height: 30px;
+	padding: 0 15px;
+	line-height: 30px;
+	float: right;
+	cursor: pointer;
+}
+.item-search {
+	width: 100%;
+}
+.add-item {
+	width: 100%;
+	height: calc(100vh - 300px);
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+.add-item table {
+	width: 100%;
+}
+.font-gray {
+	color: #aaa
+}
+.font-red {
+	color: #ff4500
+}
+.font-blue {
+	color: #00BFFF
+}
+.mb-0 {
+	margin-bottom: 0
+}
+.mb-10 {
+	margin-bottom: 10px
+}
+.h3 {
+	height: 3px
+}
+.bg-white {
+	background-color: #ecf0f3
+}
+.bg-title {
+	background-color: #50c878;
+	color: #fff;
+	font-weight: 400;
+	text-align: center;
+}
+.total-area {
+	width: 100%;
+	background-color: #fff9e3;
+	color: #000
+}
+.add-item table td {
+	padding: 3px 0
+}
+.total-area table td {
+	padding: 0
+}
+.pay-btn {
+	height: 50px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    background: #50c878;
+    color: #fff;
+    border: 0;
+}
+.add-btn {
+    width: 100%;
+    height: 25px;
+    font-size: 11px;
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    background: #f5f5f5;
+    color: #555;
+    border: 0;
+}
+.font16 {
+	font-size: 16px;
+}
+.bold {
+	font-weight: 600
+}
+.discount {
+	background: transparent;
+    padding: 0px;
+    font-size: 11px;
+    border-radius: 0px;
+    box-shadow: none;
+    text-align: center;
+}
+.action-btns {
+	width: 100%
+}
+.action-btn {
+    width: calc(25% - 3px);
+    height: 50px;
+    font-size: 12px;
+    border-radius: 0;
+    cursor: pointer;
+    padding: 0;
+    background: #f5f5f5;
+    color: #555;
+    border: 0;
+}
+.trnx-list {
+	width: 100%;
+	height: 38vh;
+	overflow: hidden;
+	margin: 0;
+	background-color: #f5f5f5
+}
+.hold-list {
+	width: 100%;
+	height: 38vh;
+	overflow: hidden;
+	margin: 0;
+	background-color: #f5f5f5
+}
+.return-list {
+	width: 100%;
+	height: 22vh;
+	overflow: hidden;
+	margin: 0;
+	background-color: #f5f5f5
+}
+.trnx-tbl th, td {
+	padding: 5px 0
+}
+.cmd-area {
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
+}
+.modal-btn {
+	color: #fff
+}
+
+.checkout-btn {
+  line-height: 40px;
+  height: 40px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 0 15px;
+  background: #5bccf6;
+  color: #fff;
+  border: 0;
+}
+.modal-content {
+	padding: 3em 2em
+}
+.modal-close {
+    top: -5px;
+    color: #aaa;
+}
+.tbl-2 {
+	height: auto;
+	overflow-y: scroll;
+}
+.order-list input[type=checkbox] {
+	width: 15px;
+	float: left
+}
+
+.loader {
+    position: absolute;
+    top: calc(50% - 4em);
+    left: calc(50% - 4em);
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-left: 2px solid #000000;
+    border-radius: 50%;
+    animation: load8 0.5s infinite linear;
+    transition: opacity 0.3s;
+	z-index: 99;
+}
+  
+  .loader--hide {
+	opacity: 0;
+  }
+  
+  @keyframes load8 {
+	0% {
+	  transform: rotate(0deg);
+	}
+	100% {
+	  transform: rotate(360deg);
+	}
+  }

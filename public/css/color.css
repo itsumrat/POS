@@ -1,0 +1,156 @@
+/*
+Neon Blue: #5bccf6;
+Yellow: #fcde67;
+Black: #030e12;
+backgrond-color: #ecf0f3;
+
+
+
+*/
+
+/* Scrollbar Design */
+
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{
+	-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,.3);
+	-webkit-border-radius:0;border-radius:0}
+::-webkit-scrollbar-thumb{
+	-webkit-border-radius:0;
+	border-radius:0;
+	background:rgba(91,204,246,1);
+	-webkit-box-shadow:inset 0 0 2px rgba(0,0,0,.5)}
+::-webkit-scrollbar-thumb:window-inactive{background:rgba(91,204,246,.4)}
+
+
+html,body {
+	background-color: #ecf0f3
+}
+a {
+	color: #000
+}
+i {
+	color: #aaa
+}
+.badge {
+    transition: color .15s ease-in-out,
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+}
+.badge-pending {
+    color: #fff;
+    background-color: #ffc107;
+}
+.badge-approved {
+    color: #fff;
+    background-color: #28a745;
+}
+.badge-cancelled {
+    color: #fff;
+    background-color: #ff0000;
+}
+.save-btn {
+  background: #5bccf6;
+  color: #fff;
+  border: 1px solid #5bccf6;
+}
+.save-btn:hover {
+  background: #fff;
+  color: #5bccf6
+}
+.comm-btn {
+  background: orange;
+  color: #fff;
+  border: 1px solid orange;
+}
+.comm-btn:hover {
+  background: #fff;
+  color: orange
+}
+.bg-blue {
+  background: #5bccf6;
+  color: #fff;
+}
+.bg-green {
+  background: green;
+  color: #fff;
+}
+.bg-coral {
+  background: coral;
+  color: #fff;
+}
+.bg-light-coral {
+  background: #fbe8e1;
+  color: #000;
+}
+input::placeholder {
+	color: #aaa
+}
+.nav-title, .nav-title:hover, .active {
+	color: #fff;
+	background-color: #5bccf6
+}
+.right-body {
+	border-left: 1px solid #ccc
+}
+.mid-action {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc
+}
+
+.left-nav {
+	background-color: #fbfaf5
+}
+
+/* Table Design */
+
+.tbl-1 th, td {
+  background-color: rgba(0, 0, 0, 0.04);
+  color: #000;
+}
+.tbl-1 thead th {
+  background-color: skyblue;
+}
+.tbl-1 tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.tbl-1 tbody td:hover:before {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.tbl-3 thead th {
+  background-color: #000;
+  color: #fff
+}
+/* Datatable Design */
+
+.bg-gray {
+    background-color: #f0e68c
+}
+.bg-edit {
+    background-color: orange;
+    color: #fff
+}
+.bg-light {
+  background-color: #e3e3e3
+}
+.bg-edit i {
+  color: #fff
+}
+
+/* Tab Design */
+
+
+.tv-tabs {
+  color: #fff;
+}
+.tv-tabs :nth-child(odd) {
+  background-color: #5bccf6;
+}
+.tv-tabs :nth-child(even) {
+  background-color: #5bccf6;
+}
+.tv-content {
+  background-color: #eee;
+  color: #000;
+}

@@ -1,0 +1,358 @@
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+
+article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, section {
+  display: block; }
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.75rem;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: left; }
+
+.hidden {
+  display: none!important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit; }
+
+h1, .h1 {
+  font-size: 2.5rem; }
+
+h2, .h2 {
+  font-size: 2rem; }
+
+h3, .h3 {
+  font-size: 1.75rem; }
+
+h4, .h4 {
+  font-size: 1.5rem; }
+
+h5, .h5 {
+  font-size: 1.25rem; }
+
+h6, .h6 {
+  font-size: 14px;
+  font-weight: bold }
+
+hr {
+  -webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+  border: 1px solid #ddd; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  padding: 5px }
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem; }
+a {
+	text-decoration: none;
+}
+ul {
+	padding: 0;
+	margin: 0;
+}
+ul li {
+	list-style: none;
+}
+ul li a {
+	display: block;
+	width: 100%;
+	text-align: left;
+	padding: 5px 10px
+}
+ul li a:hover {
+	background-color: #eee
+}
+
+.mb-15 {
+  margin-bottom: 15px
+}
+.mb0 {
+	margin-bottom: 0px
+}
+.mt3 {
+  margin-top: 3px
+}
+.w100 {
+	width: 100%!important
+}
+.p10 {
+  padding: 10px
+}
+.p5 {
+	padding: 5px 10px
+}
+.pr10 {
+  padding-right: 10px
+}
+.pl10 {
+  padding-left: 10px
+}
+.font20 {
+	font-size: 20px
+}
+.lh35 {
+  line-height: 35px;
+}
+.pull-right {
+  float: right;
+}
+.border-rad-0 {
+  border-radius: 0!important
+}
+.bg-edit {
+  padding: 2px 5px;
+}
+.bg-light {
+  padding: 5px;
+  margin-top: 15px
+}
+br {
+  display: block;
+  content: '';
+  margin-top: 10px;
+}
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.4em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25rem;
+}
+.tbl-action-btn {
+  padding: 0 15px
+}
+.select2-container--default .select2-selection--single {
+    background-color: #ecf0f3;
+    border: 0;
+    border-radius: 20px;
+    box-shadow: inset 2px 3px 3px #cbced1, inset -2px -3px 3px #fff
+}
+
+
+
+.control-label {
+	display: block;
+	margin-bottom: 10px;
+	font-weight: bold
+}
+
+.activity-btn {
+	display: block;
+	width: 100%;
+	line-height: 30px;
+	padding: 0 10px 0 0;
+	text-align: right;
+	background-color: #f0e68c
+}
+
+.float-left {
+	float: left;
+}
+.float-right {
+	float: right;
+}
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
+.text-center {
+	text-align: center;
+}
+.left-nav {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	padding: 15px
+}
+.right-body {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	padding: 15px;
+}
+.mid-action {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	padding: 15px;
+}
+.right-report {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	padding: 15px;
+}
+.top-action {
+	width: 100%;
+	height: 100%;
+	min-height: 100%;
+	padding: 15px;
+}
+.bottom-action {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    padding: 0;
+}
+.bottom-report {
+	width: 100%;
+	height: 100%;
+	min-height: 100px;
+	padding: 20px 0;
+	border-top: 1px solid #ccc
+}
+
+/* Toggle Switch Style */
+
+.switch-holder {
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow:
+    		-3px -1px 6px rgb(255 255 255 / 70%), 
+    		1px 2px 4px rgb(0 0 0 / 30%), 
+    		inset 20px 25px 30px rgb(255 255 255 / 70%), 
+    		inset 4px 4px 14px rgb(0 0 0 / 30%);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.switch-label {
+    width: 200px;
+}
+
+.switch-label i {
+    margin-right: 5px;
+}
+
+.switch-toggle {
+    height: 40px;
+}
+
+.switch-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    z-index: -2;
+}
+
+.switch-toggle input[type="checkbox"] + label {
+    position: relative;
+    display: inline-block;
+    width: 111px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0;
+    cursor: pointer;
+    box-shadow: inset -8px -8px 15px rgba(255,255,255,.6),
+                inset 10px 10px 10px rgba(0,0,0, .25);
+    
+}
+
+.switch-toggle input[type="checkbox"] + label::before {
+    position: absolute;
+    content: 'END';
+    font-size: 10px;
+    text-align: center;
+    line-height: 25px;
+    top: 8px;
+    left: 8px;
+    width: 45px;
+    height: 25px;
+    border-radius: 20px;
+    background-color: #d1dad3;
+    box-shadow: -3px -3px 5px rgba(255,255,255,.5),
+                3px 3px 5px rgba(0,0,0, .25);
+    transition: .3s ease-in-out;
+}
+
+.switch-toggle input[type="checkbox"]:checked + label::before {
+    left: 50%;
+    content: 'START';
+    color: #fff;
+    background-color: #00b33c;
+    box-shadow: -3px -3px 5px rgba(255,255,255,.5),
+                3px 3px 5px #00b33c;
+}
+
+/* Check Switch Design */
+
+/* Hide the input */
+input[type=checkbox]#chck {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
+.check-trail {
+  display: flex;
+  align-items: center;
+  width: 80px;
+  height: 20px;
+  margin-top: 5px;
+  background: #2c3e50;
+  border-radius: 2.5em;
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+
+.check-handler {
+  display: flex;
+  margin-left: 0.5em;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  background: #34495e;
+  border-radius: 50%;
+  transition: all 0.5s ease;
+}
+.check-handler:before {
+  content: "×";
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+input[type=checkbox]:checked + .check-trail {
+  background: #16a085;
+}
+input[type=checkbox]:checked + .check-trail .check-handler {
+  margin-left: 50%;
+  background: #1abc9c;
+}
+input[type=checkbox]:checked + .check-trail .check-handler::before {
+  content: "✔";
+}
