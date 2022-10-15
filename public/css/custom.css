@@ -27,6 +27,11 @@
     width: 100%;
   }
 
+  .css-1s2u09g-control {
+    max-height: 28px !important;
+    min-height: 28px !important;
+}
+
   .table tr, .table td, .table th {
     background: #ecf0f3 !important;
   }

@@ -144,12 +144,15 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('customer_type/{uniqueId}', [CustomerTypeController::class, 'update'])->name('customer.type.update');
     Route::get('customer_type/{search}', [CustomerTypeController::class, 'search'])->name('customer.type.search');
 
+    
+
 
     // Get Customer Index
     Route::get('customer', [CustomerController::class, 'index'])->name('customer.index');
     Route::post('customer', [CustomerController::class, 'store'])->name('customer.store');
     Route::post('customer/{uniqueId}', [CustomerController::class, 'update'])->name('customer.update');
     Route::get('customer/{search}', [CustomerController::class, 'search'])->name('customer.search');
+    Route::get('customerList', [CustomerController::class, 'customerList'])->name('customer.customerList');
 
 
     // Get Vendor Type Index

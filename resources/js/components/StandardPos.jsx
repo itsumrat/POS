@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, CSSProperties } from 'react';
 import PosAdmin from './pos_admin';
 import { Pos } from '../store/actions/Pos'
 import Loading from './Loading';
@@ -7,6 +7,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import Barcode from './pos_window/Barcode';
 import TransactionSearch from './pos_window/TransactionSearch';
 import Customer from './pos_window/Customer';
+import Select from 'react-select'
 
 const Standardpos = () => {
 
@@ -34,6 +35,8 @@ const Standardpos = () => {
     const [transactionId, setTransactionId] = useState('');
     const [transactionSearch, setTransactionSearch] = useState(0);
     const [customer, setCustomer] = useState('modal');
+    const [customerLists, setCustomerLists] = useState({});
+    const [customerId, setCustomerId] = useState(1);
 
     
     
@@ -72,6 +75,7 @@ const Standardpos = () => {
     useEffect(() => {
         // Call Transaction List
         getLatestTransaction()
+        customerList()
 
        
 
@@ -79,12 +83,36 @@ const Standardpos = () => {
         // autoFocusBarcode.current.focus();
     }, [])
 
+
+
     useEffect(() => {
         if(saleStatus.status != "Completed"){
             paymentDone();
         }
         
     }, [saleStatus])
+
+    const customerList = (e) => {
+
+        axios.get('/customerList/')
+        .then(function (response) {
+
+            const listItems = response.data.map((item) => (
+                
+                    {
+                        'label': item.customer_name+' '+item.customer_contact,
+                        'value': item.id,
+                    }
+                
+            ))
+
+            setCustomerLists(listItems);
+
+        })
+        .catch(function (error) {
+            console.log(error);
+        })
+    }
 
     const getProduct = (e) => {
 
@@ -214,7 +242,8 @@ const Standardpos = () => {
             paymentTrasaction: otherspaymentTransaction,
             status: saleStatus.status,
             oldTransactionId: transactionId,
-            flatFixedAmount: flatFixedAmount
+            flatFixedAmount: flatFixedAmount,
+            customer_id: customerId
         }        
 
         axios.post(url+'/sales/', transactionData)
@@ -373,7 +402,10 @@ const Standardpos = () => {
         console.log("hello");
         setCustomer('modal target');
         setDisplay('');
-        console.log(customer);
+    }
+
+    const slectedCustomer = (e) => {
+        setCustomerId(e.value);
     }
 
     const close = () => {
@@ -386,8 +418,22 @@ const Standardpos = () => {
         autoFocusExchange.current.focus();
     }
 
+    const customStyles = {
+        option: (provided, state) => ({
+          ...provided,
+          borderBottom: '1px dotted pink',
+          color: state.isSelected ? '#fff' : 'blue',
+        }),
+        
+        singleValue: (provided, state) => {
+          const opacity = state.isDisabled ? 0.5 : 1;
+          const transition = 'opacity 300ms';
+      
+          return { ...provided, opacity, transition };
+        }
+      }
+ 
     
-
 
     return (
         <React.Fragment>
@@ -397,7 +443,14 @@ const Standardpos = () => {
                         <div className="row">
                             <div className="col-4">
                                 <div className="row">
-                                    <div className="pos-cust">Walk In</div>
+                                    <div className="pos-cust">
+                                        <Select 
+                                            defaultValue={customerLists[1]}
+                                            onChange={slectedCustomer}
+                                            styles={customStyles} 
+                                            options={customerLists} />
+                                        
+                                    </div>
                                     <div className="add-cust-btn"  onClick={searchTransaction}>&#9740;</div>
                                     <div className="add-cust-btn" onClick={addCustomer}>+</div>
                                 </div>

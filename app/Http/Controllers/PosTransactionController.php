@@ -52,6 +52,7 @@ class PosTransactionController extends Controller
         $data['vat'] = 0;
         $data['tax'] = 0;
         $data['transaction_id'] =  $transaction;
+        $data['customer_id'] = $request->customer_id;
         $totalAmount = [];
         $totalQuanity = [];
 
@@ -97,6 +98,7 @@ class PosTransactionController extends Controller
         $trans['quantity'] =  array_sum($totalQuanity);
         $trans['exchange_amount'] = $request->exchange;
         $trans['return_amount'] = $request->returnAmount;
+        $trans['customer_id'] = $request->customer_id;
         $trans['vat'] = 0;
         $trans['tax'] = 0;
         $trans['payment_type'] = $request->payment;

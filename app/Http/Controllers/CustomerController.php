@@ -18,6 +18,18 @@ class CustomerController extends Controller
         return Customer::orderBy('id','desc')->paginate(20);
     }
 
+
+    /**
+     * Display a listing of the resource.
+     * for POS show list customer
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function customerList()
+    {
+        return Customer::orderBy('id','desc')->get();
+    }
+
     
 
     /**
