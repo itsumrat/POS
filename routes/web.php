@@ -24,6 +24,7 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VatController;
 use App\Http\Controllers\VendorTypeController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -153,6 +154,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('customer/{uniqueId}', [CustomerController::class, 'update'])->name('customer.update');
     Route::get('customer/{search}', [CustomerController::class, 'search'])->name('customer.search');
     Route::get('customerList', [CustomerController::class, 'customerList'])->name('customer.customerList');
+
+    // Get Vendor Index
+    Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
+    Route::post('vendor', [VendorController::class, 'store'])->name('vendor.store');
+    Route::post('vendor/{uniqueId}', [VendorController::class, 'update'])->name('vendor.update');
+    Route::get('vendor/{search}', [VendorController::class, 'search'])->name('vendor.search');
+    Route::get('vendorList', [VendorController::class, 'vendorList'])->name('vendor.vendorList');
 
 
     // Get Vendor Type Index
