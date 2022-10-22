@@ -15489,7 +15489,6 @@ var Standardpos = function Standardpos() {
   };
 
   var addCustomer = function addCustomer() {
-    console.log("hello");
     setCustomer('modal target');
     setDisplay('');
   };
@@ -21798,15 +21797,13 @@ function Customer(props) {
       setCustomerData = _useState4[1];
 
   var addCustomerData = function addCustomerData() {
-    console.log("hello");
+    console.log("hello 000");
   };
 
   var customerField = function customerField(e) {
     setCustomerData(_objectSpread(_objectSpread({}, customerData), {}, _defineProperty({}, e.target.name, e.target.value)));
-    console.log(customerData);
   };
 
-  console.log(props);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h6", {
       className: "bg-title",

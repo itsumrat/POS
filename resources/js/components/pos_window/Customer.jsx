@@ -13,7 +13,7 @@ export default function Customer(props) {
     })
 
   const addCustomerData = () => {
-    console.log("hello");
+    console.log("hello 000");
   }
 
 
@@ -22,16 +22,12 @@ export default function Customer(props) {
           ...customerData,         
           [e.target.name] : e.target.value 
       })
-
-      console.log(customerData);
   }
 
-  console.log(props);
+
   return (
     <>
       <h6 className="bg-title">Add New Customer</h6>
-
-
         <div className="row">
           <div className="col-6">
             <input type="text" onChange={customerField} value={customerData.customer_contact} name="customer_contact" className="form-control" placeholder="Customer Contact"/>

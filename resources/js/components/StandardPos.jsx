@@ -399,7 +399,7 @@ const Standardpos = () => {
     }
 
     const addCustomer = () => {
-        console.log("hello");
+        
         setCustomer('modal target');
         setDisplay('');
     }
