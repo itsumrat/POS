@@ -15213,6 +15213,13 @@ var Standardpos = function Standardpos() {
       setCustomerId = _useState42[1];
 
   var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    type: []
+  }),
+      _useState44 = _slicedToArray(_useState43, 2),
+      customerType = _useState44[0],
+      setCustomerType = _useState44[1];
+
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     Vat_percentage: '',
     Vat_amount: '',
     Discount_discount: '',
@@ -15220,24 +15227,24 @@ var Standardpos = function Standardpos() {
     Discount_parcentage: '',
     Discount_flat_percentage: ''
   }),
-      _useState44 = _slicedToArray(_useState43, 2),
-      flatFixedAmount = _useState44[0],
-      setFlatFixedAmount = _useState44[1];
-
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('none'),
       _useState46 = _slicedToArray(_useState45, 2),
-      display = _useState46[0],
-      setDisplay = _useState46[1];
+      flatFixedAmount = _useState46[0],
+      setFlatFixedAmount = _useState46[1];
+
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('none'),
+      _useState48 = _slicedToArray(_useState47, 2),
+      display = _useState48[0],
+      setDisplay = _useState48[1];
 
   var ref = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null); // const items = useSelector((state) => state.PosItem.posSeleItems)
   // Url
 
   var url = localStorage.getItem('baseUrl'); // Loading 
 
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-      _useState48 = _slicedToArray(_useState47, 2),
-      isLoading = _useState48[0],
-      setIsLoading = _useState48[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+      _useState50 = _slicedToArray(_useState49, 2),
+      isLoading = _useState50[0],
+      setIsLoading = _useState50[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     setTotal(items.items.reduce(function (prevAmount, currentAmount) {
@@ -15251,6 +15258,7 @@ var Standardpos = function Standardpos() {
     // Call Transaction List
     getLatestTransaction();
     customerList();
+    getCustomerType();
     autoFocusExchange.current.focus(); // autoFocusBarcode.current.focus();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
@@ -15258,6 +15266,18 @@ var Standardpos = function Standardpos() {
       paymentDone();
     }
   }, [saleStatus]);
+
+  var getCustomerType = function getCustomerType() {
+    setIsLoading(true);
+    axios.get('/customer_type').then(function (response) {
+      setCustomerType({
+        type: response.data
+      });
+      setIsLoading(false);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+  };
 
   var customerList = function customerList(e) {
     axios.get('/customerList/').then(function (response) {
@@ -15852,7 +15872,10 @@ var Standardpos = function Standardpos() {
       },
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "modal-content",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_pos_window_Customer__WEBPACK_IMPORTED_MODULE_7__["default"], {})
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_pos_window_Customer__WEBPACK_IMPORTED_MODULE_7__["default"], {
+          functionClose: close,
+          types: customerType
+        })
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
       id: "cash",
@@ -21756,7 +21779,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Customer)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _Loading__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Loading */ "./resources/js/components/Loading.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
@@ -21779,6 +21803,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 function Customer(props) {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
       _useState2 = _slicedToArray(_useState, 2),
@@ -21789,30 +21814,38 @@ function Customer(props) {
     address: "",
     customer_contact: "",
     customer_name: "",
-    nid: "",
-    opening_balance: ""
+    nid_no: "",
+    openning_balance: ""
   }),
       _useState4 = _slicedToArray(_useState3, 2),
       customerData = _useState4[0],
       setCustomerData = _useState4[1];
 
-  var addCustomerData = function addCustomerData() {
-    console.log("hello 000");
+  var addCustomerData = function addCustomerData(e) {
+    setIsLoading(true);
+    axios.post('/customer', customerData).then(function (response) {
+      console.log(response.data);
+      props.functionClose();
+      setIsLoading(false);
+    })["catch"](function (error) {
+      console.log(error);
+    });
+    e.preventDefault();
   };
 
   var customerField = function customerField(e) {
     setCustomerData(_objectSpread(_objectSpread({}, customerData), {}, _defineProperty({}, e.target.name, e.target.value)));
   };
 
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h6", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("h6", {
       className: "bg-title",
       children: "Add New Customer"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
       className: "row",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
           type: "text",
           onChange: customerField,
           value: customerData.customer_contact,
@@ -21820,9 +21853,9 @@ function Customer(props) {
           className: "form-control",
           placeholder: "Customer Contact"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
           type: "text",
           onChange: customerField,
           value: customerData.customer_name,
@@ -21830,19 +21863,19 @@ function Customer(props) {
           className: "form-control",
           placeholder: "Customer Name"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
           type: "text",
           onChange: customerField,
           value: customerData.nid,
-          name: "nid",
+          name: "nid_no",
           className: "form-control",
           placeholder: "NID No"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
           type: "text",
           onChange: customerField,
           value: customerData.address,
@@ -21850,39 +21883,43 @@ function Customer(props) {
           className: "form-control",
           placeholder: "Address"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("input", {
           type: "text",
           onChange: customerField,
-          value: customerData.opening_balance,
-          name: "opening_balance",
+          value: customerData.openning_balance,
+          name: "openning_balance",
           className: "form-control",
-          placeholder: "Opening Balance"
+          placeholder: "Openning Balance"
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         className: "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("select", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("select", {
           name: "customer_type",
           id: "customer_type",
           onChange: customerField,
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
-            value: "",
-            children: "Type of Customer"
+          children: props.types.type.map(function (type) {
+            return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("option", {
+              value: type.id,
+              children: type.name
+            }, type.id);
           })
         })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
       "class": "row",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
         "class": "col-6",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
           "class": "save-btn",
           onClick: addCustomerData,
           children: "Save Customer Data"
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("span", {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_Loading__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      load: isLoading
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("span", {
       className: "modal-close",
       onClick: props.functionClose,
       style: {

@@ -1,19 +1,41 @@
 import React, { useState } from 'react'
+import Loading from '../Loading';
 
 export default function Customer(props) {
 
   const [isLoading, setIsLoading] = useState(false);
 
+
   const [customerData, setCustomerData ] = useState({
         address: "",
         customer_contact: "",
         customer_name: "",
-        nid: "",
-        opening_balance: ""
+        nid_no: "",
+        openning_balance: ""
     })
 
-  const addCustomerData = () => {
-    console.log("hello 000");
+  const addCustomerData = (e) => {
+
+    setIsLoading(true);
+        axios.post('/customer', customerData)
+            .then(function (response) {
+
+              
+
+                console.log(response.data)
+
+                props.functionClose()
+
+
+                setIsLoading(false);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+
+
+        e.preventDefault();
   }
 
 
@@ -36,17 +58,22 @@ export default function Customer(props) {
             <input type="text" onChange={customerField} value={customerData.customer_name} name="customer_name" className="form-control" placeholder="Customer Name"/>
           </div>
           <div className="col-6">
-            <input type="text" onChange={customerField} value={customerData.nid} name="nid" className="form-control" placeholder="NID No"/>
+            <input type="text" onChange={customerField} value={customerData.nid} name="nid_no" className="form-control" placeholder="NID No"/>
           </div>
           <div className="col-6">
             <input type="text" onChange={customerField} value={customerData.address} name="address" className="form-control" placeholder="Address"/>
           </div>
           <div className="col-6">
-            <input type="text" onChange={customerField} value={customerData.opening_balance} name="opening_balance" className="form-control" placeholder="Opening Balance"/>
+            <input type="text" onChange={customerField} value={customerData.openning_balance} name="openning_balance" className="form-control" placeholder="Openning Balance"/>
           </div>
           <div className="col-6">
             <select name="customer_type" id="customer_type" onChange={customerField} >
-              <option value="">Type of Customer</option>
+                {
+                  props.types.type.map((type) => (
+                      <option key={type.id} value={type.id}>{ type.name }</option>
+                  ))
+                }
+              
             </select>
           </div>
         </div>
@@ -55,6 +82,8 @@ export default function Customer(props) {
             <button class="save-btn" onClick={addCustomerData}>Save Customer Data</button>
           </div>
         </div>
+
+        <Loading load={isLoading} />
 
 
       <span className="modal-close" onClick={props.functionClose} style={{ cursor: "pointer" }}>&times;</span>
