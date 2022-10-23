@@ -17,17 +17,20 @@ export default function Customer(props) {
   const addCustomerData = (e) => {
 
     setIsLoading(true);
-        axios.post('/customer', customerData)
+        axios.post('/customer/pos/window', customerData)
             .then(function (response) {
 
-              
-
-                console.log(response.data)
+              props.slectedCustomer(response.data)
 
                 props.functionClose()
-
-
-                setIsLoading(false);
+                setIsLoading(false)
+                setCustomerData({
+                  address: "",
+                  customer_contact: "",
+                  customer_name: "",
+                  nid_no: "",
+                  openning_balance: ""
+              })
 
             })
             .catch(function (error) {
@@ -77,9 +80,9 @@ export default function Customer(props) {
             </select>
           </div>
         </div>
-        <div class="row">
-          <div class="col-6">
-            <button class="save-btn" onClick={addCustomerData}>Save Customer Data</button>
+        <div className="row">
+          <div className="col-6">
+            <button className="save-btn" onClick={addCustomerData}>Save Customer Data</button>
           </div>
         </div>
 

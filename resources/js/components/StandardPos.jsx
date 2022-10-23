@@ -425,6 +425,10 @@ const Standardpos = () => {
         setCustomerId(e.value);
     }
 
+    const slectedCustomerCallBack = (customer_id) => {
+        setCustomerId(customer_id.id);
+    }
+
     const close = () => {
         setModalTarget('modal');
         setOtherPaymentTarget('modal');
@@ -663,7 +667,7 @@ const Standardpos = () => {
 
             <div id="cash" className={ customer } style={{ display: display }}>
                 <div className="modal-content">
-                   <Customer functionClose={close} types={customerType}/>
+                   <Customer functionClose={close} types={customerType} slectedCustomer={slectedCustomerCallBack}/>
                 </div>
             </div>
 

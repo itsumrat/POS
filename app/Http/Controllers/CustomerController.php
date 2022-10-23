@@ -15,7 +15,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Customer::orderBy('id','desc')->paginate(20);
+        return Customer::with('type')->orderBy('id','desc')->paginate(20);
     }
 
 
@@ -27,7 +27,7 @@ class CustomerController extends Controller
      */
     public function customerList()
     {
-        return Customer::orderBy('id','desc')->get();
+        return Customer::with('type')->orderBy('id','desc')->get();
     }
 
     
@@ -46,6 +46,23 @@ class CustomerController extends Controller
         Customer::create($data);
 
         return $this->index();
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFromPosWindow(Request $request)
+    {
+        $data = $request->all();
+        $data['created_by'] = Auth::user()->id;
+        $data['updated_by'] = Auth::user()->id;
+        $store = Customer::create($data);
+
+        return $store;
     }
 
     /**
