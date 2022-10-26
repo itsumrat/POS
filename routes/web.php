@@ -134,12 +134,12 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
 
 
-    // // Get Requisition  Index
-    // Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');
-    // Route::post('requisition', [RequisitionCotroller::class, 'store'])->name('requisition.store');
-    // Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
-    // Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
-    // Route::get('requisitionList', [RequisitionCotroller::class, 'vendorList'])->name('requisition.requisitionList');
+    // Get Requisition  Index
+    Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');
+    Route::post('requisition', [RequisitionCotroller::class, 'store'])->name('requisition.store');
+    Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
+    Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
+    Route::get('requisitionList', [RequisitionCotroller::class, 'vendorList'])->name('requisition.requisitionList');
     // Get Vendor  Index
     Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('vendor', [VendorController::class, 'store'])->name('vendor.store');
