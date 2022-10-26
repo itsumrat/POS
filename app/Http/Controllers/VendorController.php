@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\VendorType;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class VendorController extends Controller
     public function index()
     {
         //
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
@@ -31,7 +32,7 @@ class VendorController extends Controller
 
     public function vendorList()
     {
-        return Vendor::orderBy('id','desc')->get();
+        return Vendor::orderBy('id', 'desc')->get();
     }
 
     /**
@@ -43,7 +44,7 @@ class VendorController extends Controller
     {
         //
 
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
     }
@@ -54,11 +55,11 @@ class VendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$uniqueId)
+    public function store(Request $request, $uniqueId)
     {
         //
-        
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
 
@@ -69,8 +70,6 @@ class VendorController extends Controller
         Vendor::create($data);
 
         return $this->index();
-
-
     }
 
     /**
@@ -86,7 +85,7 @@ class VendorController extends Controller
 
 
 
-        /**
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -94,11 +93,11 @@ class VendorController extends Controller
      */
     public function search($search)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
-        $data = VEndor::where('unique_id', "LIKE", '%'. $search .'%' )->orWhere('vendor_name', "LIKE", '%'. $search .'%' )->get();
+        $data = VEndor::where('unique_id', "LIKE", '%' . $search . '%')->orWhere('vendor_name', "LIKE", '%' . $search . '%')->get();
         return response()->json($data);
     }
 
@@ -120,19 +119,18 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uniqueId)
     {
         //
-        if(!PermissionAccess::viewAccess($this->menuId, 3)){
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
-       
+
         $data = $request->all();
         $data['updated_by'] = Auth::user()->id;
 
         Vendor::where('unique_id', $uniqueId)->update($data);
         return response()->json($data);
-
     }
 
     /**
@@ -144,7 +142,7 @@ class VendorController extends Controller
     public function destroy($id)
     {
         //
-        if(!PermissionAccess::viewAccess($this->menuId, 4)){
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
     }
