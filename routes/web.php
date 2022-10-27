@@ -15,6 +15,7 @@ use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PosTransactionController;
+use App\Http\Controllers\PurchaseCotroller;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegisterSellController;
 use App\Http\Controllers\RequisitionCotroller;
@@ -29,6 +30,7 @@ use App\Http\Controllers\VendorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -140,6 +142,14 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
     Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
     Route::get('requisitionList', [RequisitionCotroller::class, 'vendorList'])->name('requisition.requisitionList');
+
+    // Get Purchase  Index
+    Route::get('purchase', [PurchaseCotroller::class, 'index'])->name('purchase.index');
+    Route::post('purchase', [PurchaseCotroller::class, 'store'])->name('purchase.store');
+    Route::post('purchase/{uniqueId}', [PurchaseCotroller::class, 'update'])->name('purchase.update');
+    Route::get('purchase/{search}', [PurchaseCotroller::class, 'search'])->name('purchase.search');
+    Route::get('purchaseList', [PurchaseCotroller::class, 'vendorList'])->name('purchase.purchaseList');
+
     // Get Vendor  Index
     Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('vendor', [VendorController::class, 'store'])->name('vendor.store');

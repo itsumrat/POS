@@ -7,12 +7,14 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PurchaseCotroller;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\RequisitionCotroller;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,6 @@ use App\Http\Controllers\RequisitionCotroller;
 |
 */
 // Get Requisition  Index
-
 
 // Route::middleware(['middleware' => 'auth'])->group(function () {
 
