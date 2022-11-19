@@ -60,7 +60,8 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, 1)) {
             // if success login
-            return redirect('/dashboard');
+            // return redirect('/dashboard');
+            return redirect('/home');
         }
 
         return redirect()->back();
