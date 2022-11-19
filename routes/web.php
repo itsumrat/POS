@@ -8,6 +8,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemMasterController;
 use App\Http\Controllers\MenuActivityController;
 use App\Http\Controllers\MenuController;
@@ -15,10 +16,10 @@ use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PosTransactionController;
-use App\Http\Controllers\PurchaseCotroller;
+use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegisterSellController;
-use App\Http\Controllers\RequisitionCotroller;
+use App\Http\Controllers\RequisitionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SellTransactionController;
 use App\Http\Controllers\SizeController;
@@ -51,6 +52,7 @@ Route::post('user/login', [LoginController::class, 'authenticate'])->name('user.
 
 Route::middleware(['middleware' => 'auth'])->group(function () {
 
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
 
     Route::get('user', [UserController::class, 'index'])->name('user.data');
@@ -134,21 +136,30 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     Route::get('product/{search}', [ItemMasterController::class, 'getPost'])->name('item.search');
 
-
+    //Inventory
+    Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::post('inventory', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::post('inventory/{uniqueId}', [InventoryController::class, 'update'])->name('inventory.update');
+    Route::get('inventory/{search}', [InventoryController::class, 'search'])->name('inventory.search');
 
     // Get Requisition  Index
-    Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');
-    Route::post('requisition', [RequisitionCotroller::class, 'store'])->name('requisition.store');
-    Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
-    Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
-    Route::get('requisitionList', [RequisitionCotroller::class, 'vendorList'])->name('requisition.requisitionList');
+    Route::get('requisition', [RequisitionController::class, 'index'])->name('requisition.index');
+    Route::post('requisition', [RequisitionController::class, 'store'])->name('requisition.store');
+    Route::post('requisition/{uniqueId}', [RequisitionController::class, 'update'])->name('requisition.update');
+    Route::get('requisition/{search}', [RequisitionController::class, 'search'])->name('requisition.search');
+    Route::get('requisitionList', [RequisitionController::class, 'vendorList'])->name('requisition.requisitionList');
+    Route::get('item/{search}', [RequisitionController::class, 'getItem']);
+    Route::get('reqvat', [RequisitionController::class, 'getVat']);
+
 
     // Get Purchase  Index
-    Route::get('purchase', [PurchaseCotroller::class, 'index'])->name('purchase.index');
-    Route::post('purchase', [PurchaseCotroller::class, 'store'])->name('purchase.store');
-    Route::post('purchase/{uniqueId}', [PurchaseCotroller::class, 'update'])->name('purchase.update');
-    Route::get('purchase/{search}', [PurchaseCotroller::class, 'search'])->name('purchase.search');
-    Route::get('purchaseList', [PurchaseCotroller::class, 'vendorList'])->name('purchase.purchaseList');
+    Route::get('purchase', [PurchaseController::class, 'index'])->name('purchase.index');
+    Route::post('purchase', [PurchaseController::class, 'store'])->name('purchase.store');
+    Route::post('purchase/{uniqueId}', [PurchaseController::class, 'update'])->name('purchase.update');
+    Route::get('purchase/{search}', [PurchaseController::class, 'search'])->name('purchase.search');
+    Route::get('purchaseList', [PurchaseController::class, 'vendorList'])->name('purchase.purchaseList');
+    Route::get('prequisition/{search}', [PurchaseController::class, 'requisition'])->name('prequisition.search');
+
 
     // Get Vendor  Index
     Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
@@ -159,11 +170,11 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     //Requisition
 
-    Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');
-    Route::post('requisition', [RequisitionCotroller::class, 'store'])->name('requisition.store');
-    Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
-    Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
-    Route::get('requisitionList', [RequisitionCotroller::class, 'requisitionList'])->name('requisition.requisitionList');
+    // Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');
+    // Route::post('requisition', [RequisitionCotroller::class, 'store'])->name('requisition.store');
+    // Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
+    // Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
+    // Route::get('requisitionList', [RequisitionCotroller::class, 'requisitionList'])->name('requisition.requisitionList');
 
     // Get Vendor Type Index
     Route::get('vendor_type', [VendorTypeController::class, 'index'])->name('vendor.type.index');

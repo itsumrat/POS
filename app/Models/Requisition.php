@@ -10,5 +10,8 @@ class Requisition extends Model
     use HasFactory;
     protected $table = 'requisitions';
     protected $guarded = [];
-
+    public function reqs()
+    {
+        return $this->hasMany(RequisitionDetails::class, 'requisition_no');
+    }
 }

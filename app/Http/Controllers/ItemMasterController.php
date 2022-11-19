@@ -19,9 +19,8 @@ class ItemMasterController extends Controller
      */
     public function index()
     {
-        
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
-            
+
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
@@ -29,7 +28,7 @@ class ItemMasterController extends Controller
         return response()->json($items);
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -39,7 +38,7 @@ class ItemMasterController extends Controller
      */
     public function store(Request $request)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
 
@@ -57,7 +56,7 @@ class ItemMasterController extends Controller
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
         $data['created_by'] = Auth::user()->id;
         $data['updated_by'] = Auth::user()->id;
-        
+
         ItemMaster::create($data);
         return response()->json($data);
     }
@@ -70,11 +69,11 @@ class ItemMasterController extends Controller
      */
     public function search($search)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
-        $data = ItemMaster::where('unique_id', "LIKE", '%'. $search .'%' )->orWhere('name', "LIKE", '%'. $search .'%' )->get();
+        $data = ItemMaster::where('unique_id', "LIKE", '%' . $search . '%')->orWhere('name', "LIKE", '%' . $search . '%')->get();
         return response()->json($data);
     }
 
@@ -87,7 +86,7 @@ class ItemMasterController extends Controller
      */
     public function update(Request $request, $uniqueId)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 3)){
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
 
@@ -102,7 +101,7 @@ class ItemMasterController extends Controller
         $data['size_id'] = $request->size_id;
         $data['unit_id'] = $request->unit_id;
         $data['updated_by'] = Auth::user()->id;
-        
+
         ItemMaster::where('unique_id', $uniqueId)->update($data);
         return response()->json($data);
     }
@@ -115,7 +114,7 @@ class ItemMasterController extends Controller
      */
     public function destroy($id)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 4)){
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
     }
@@ -129,11 +128,9 @@ class ItemMasterController extends Controller
 
     public function getPost($barcode)
     {
-
+        //dd($barcode);
         $item = ItemMaster::with('unit', 'size', 'color')->where('barcode', $barcode)->first();
 
         return $item;
     }
-
-    
 }

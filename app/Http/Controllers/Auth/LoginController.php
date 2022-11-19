@@ -31,8 +31,9 @@ class LoginController extends Controller
      * @var string
      */
 
-    public function authenticate(Request $request){
-        
+    public function authenticate(Request $request)
+    {
+
         $requestData = $request->only('email', 'password');
         $passwordField = $requestData['password'];
         $login = $requestData['email'];
@@ -59,9 +60,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, 1)) {
             // if success login
-            return redirect('/home');
-
-
+            return redirect('/dashboard');
         }
 
         return redirect()->back();
@@ -75,7 +74,8 @@ class LoginController extends Controller
      * @method post
      */
 
-    public function Logout(Request $request){
+    public function Logout(Request $request)
+    {
 
         Auth::logout();
 
@@ -94,6 +94,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    
 }

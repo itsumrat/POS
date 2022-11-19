@@ -25,7 +25,9 @@ class VendorController extends Controller
         }
 
         $vendor_types = VendorType::orderBy('id', "desc")->get();
-        return response()->json($vendor_types);
+        $vendors = Vendor::orderBy('id', "desc")->get();
+        //return response()->json($vendor_types);
+        return view('vendor.index', compact('vendor_types', 'vendors'));
     }
 
 
@@ -55,13 +57,13 @@ class VendorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $uniqueId)
+    public function store(Request $request)
     {
         //
 
-        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
-            return response()->json('Sorry');
-        }
+        // if (!PermissionAccess::viewAccess($this->menuId, 2)) {
+        //     return response()->json('Sorry');
+        // }
 
         $data = $request->all();
         $data['created_by'] = Auth::user()->id;

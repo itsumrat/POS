@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 use App\Models\VendorType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Models\Vat;
 
 
-class RequisitionCotroller extends Controller
+
+class RequisitionController extends Controller
 {
     private $menuId = 5;
 
@@ -26,9 +28,9 @@ class RequisitionCotroller extends Controller
         if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
-
+        $reqs = Requisition::orderBy('id', "desc")->get();
         $vendor_types = VendorType::orderBy('id', "desc")->get();
-        return response()->json($vendor_types);
+        return view('requisition.index', compact('vendor_types', 'reqs'));
     }
 
 
@@ -58,7 +60,7 @@ class RequisitionCotroller extends Controller
     public function store(Request $request)
     {
         //
-
+        //dd($request);
         if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
@@ -70,15 +72,28 @@ class RequisitionCotroller extends Controller
         }
         $requisition_no = 'R#' . str_pad($req_no + 1, 8, "0", STR_PAD_LEFT);
 
+        // $data = $request->R;
+        // foreach ($data as $k => $d) {
+        //     echo $k;
+        // }
+        //dd($data);
+        // $items = $request->barcode;
+        $barcodes = $request->barcode;
+        $item_name = $request->item_name;
+        $qty = $request->qty;
+        $item_id = $request->id;
+        $unit = $request->uom;
+        $sub_total = $request->sub_total;
+        $unit_price = $request->unit_cost;
 
-        $items = $request->itemDatas;
         //$items = ItemMaster::get();
+        //dd($items);
 
         $data['requisition_no'] = $requisition_no;
         $data['requisition_date'] = \Carbon\Carbon::now();
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
-        $data['vendor_id'] = $request->vendor_id;
-        $data['total'] = $request->total;
+        $data['vendor_id'] = $request->vendor;
+        $data['total'] = $request->item_total;
         $data['vat'] = $request->vat;
         $data['other_charge'] = $request->other_charge;
         $data['discount'] = $request->discount;
@@ -88,17 +103,21 @@ class RequisitionCotroller extends Controller
 
         $requisition = Requisition::create($data);
         if ($requisition) {
-            foreach ($items as $item) {
+            foreach ($barcodes as $key => $value) {
+
+                //echo $barcodes[$k];
+
+
                 $reqDetail = new RequisitionDetails;
-                $reqDetail['requisition_no'] = $requisition_no;
+                $reqDetail['requisition_id'] = $requisition->id;
                 $reqDetail['unique_id'] = UniqueController::uniqueId('unique_id');
-                $reqDetail['item_id'] = $item['id'];
-                $reqDetail['barcode'] = $item['barcode'];
-                $reqDetail['item_name'] = $item['item_name'];
-                $reqDetail['uom'] = $item['uom'];
-                $reqDetail['quantity'] = $item['quantity'];
-                $reqDetail['unit_price'] = $item['unit_price'];
-                $reqDetail['subtotal'] = $item['subtotal'];
+                $reqDetail['item_id'] = $item_id[$key];
+                $reqDetail['barcode'] = $barcodes[$key];
+                $reqDetail['item_name'] = $item_name[$key];
+                $reqDetail['uom'] = $unit[$key];
+                $reqDetail['quantity'] = $qty[$key];
+                $reqDetail['unit_price'] = $unit_price[$key];
+                $reqDetail['subtotal'] = $sub_total[$key];
                 $reqDetail->save();
             }
         }
@@ -190,5 +209,23 @@ class RequisitionCotroller extends Controller
         if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
+    }
+
+    public function getItem($barcode)
+    {
+        //dd($barcode);
+        $item = ItemMaster::with('unit', 'size', 'color')->where('barcode', $barcode)->first();
+        return $item;
+
+        //return $item;
+    }
+
+    public function getVat()
+    {
+        //dd($barcode);
+        $vat = Vat::first();
+        return json_decode($vat);
+
+        //return $item;
     }
 }

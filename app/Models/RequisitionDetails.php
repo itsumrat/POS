@@ -11,4 +11,8 @@ class RequisitionDetails extends Model
     protected $table = 'requisition_details';
     protected $guarded = [];
 
+    public function reqs()
+    {
+        return $this->belongsTo(Requisition::class, 'requisition_id');
+    }
 }
