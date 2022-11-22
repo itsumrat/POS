@@ -15,7 +15,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        return Menu::get();
+        $menus =  Menu::with('actions')->get();
+
+        return view('permissions.role_access');
     }
 
 
