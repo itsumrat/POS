@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Department;
 use App\Models\ItemMaster;
+use App\Models\Size;
+use App\Models\Color;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UniqueController;
@@ -23,9 +29,18 @@ class ItemMasterController extends Controller
         if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
+        $departments = Department::get();
+        $sizes = Size::get();
+        $categories = Category::get();
+        $brands = Brand::get();
+        $units = Unit::get();
+        $colors = Color::get();
 
         $items = ItemMaster::with(['department', 'category', 'brand', 'unit', 'size', 'color'])->orderBy('id', "desc")->paginate(env("DATA_PER_PAGE"));
-        return response()->json($items);
+        // return response()->json($items);
+
+        return view('items.index', compact('items', 'departments', 'sizes', 'categories', 'brands', 'units', 'colors'));
+
     }
 
 
@@ -58,7 +73,7 @@ class ItemMasterController extends Controller
         $data['updated_by'] = Auth::user()->id;
 
         ItemMaster::create($data);
-        return response()->json($data);
+        return redirect()->back();
     }
 
     /**

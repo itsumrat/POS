@@ -3,7 +3,7 @@
 		<ul class="main-nav">
 			<li><a class="nav-title" href="javascript:void(0)">Sales / Invoicing</a></li>
 			<li><a href="pos_dashboard.php">POS Dashboard</a></li>
-			<li><a href="item_master.php">Item Master</a></li>
+			<li><a href="{{route('item.index')}}">Item Master</a></li>
 			<li><a href="{{route('inventory.index')}}">Inventory Master</a></li>
 			<li><a href="costing_pricing.php">Costing vs Pricing</a></li>
 			<li><a href="print_barcode.php">Print Barcode</a></li>
