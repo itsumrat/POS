@@ -19506,7 +19506,7 @@ var Permission = function Permission() {
 
   var fatchMenuWithActivity = function fatchMenuWithActivity() {
     var url = localStorage.getItem('baseUrl');
-    axios.get(url + '/menuActivity').then(function (response) {
+    axios.get(url + '/ActivityMenu').then(function (response) {
       console.log(response.data);
       setMenuActivities({
         menuActivities: response.data
@@ -19566,7 +19566,7 @@ var Permission = function Permission() {
       "actionData": actionId.actionId,
       "role_id": actionId.roleId
     };
-    axios.post(url + '/menuActivity', actionPermission).then(function (response) {
+    axios.post(url + '/ActivityMenu', actionPermission).then(function (response) {
       console.log(response);
     })["catch"](function (error) {
       console.log(error);

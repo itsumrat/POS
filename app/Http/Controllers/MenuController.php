@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Models\MenuActivity;
+use App\Models\ActivityMenu;
+use App\Models\MenuToRole;
+use App\Models\MenuToUser;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -13,23 +17,15 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $menus =  Menu::with('actions')->get();
+        $data['menus'] =  Menu::with(['actions', 'roleActions'])->get();
+        $data['roles'] =  Role::get();
 
-        return view('permissions.role_access');
+        return view('permissions.role_access', $data);
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -39,42 +35,54 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        MenuToRole::where('role_id',  $request->role_id)->delete();
+
+        $newInsert = [];
+        $userUpdate = [];
+
+        if(isset($request->exit)){
+            $users = User::where('role_id', $request->role_id)->get('id');
+
+            foreach($users as $user){
+
+                foreach($request->menu_id as $menu){
+                    foreach ($request->action[$menu] as $key => $action) {
+                        $userUpdate[] =  [
+                            "user_id" => $user->id,
+                            "menu_id" => $menu,
+                            "action_id" => $action,
+                        ];
+                    }
+                }
+
+                MenuToUser::where('user_id', $user->id)->delete();
+
+            }
+            MenuToUser::insert($userUpdate);
+
+            MenuToRole::where('role_id',  $request->role_id)->get();
+
+        }
+        
+
+        foreach($request->menu_id as $menu){
+            foreach ($request->action[$menu] as $key => $action) {
+                $newInsert[] =  [
+                    "role_id" => $request->role_id,
+                    "menu_id" => $menu,
+                    "action_id" => $action,
+                ];
+            }
+        }
+
+        MenuToRole::insert($newInsert);
+
+        return response()->json('success');
+
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Menu $menu)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Menu $menu)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Menu  $menu
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Menu $menu)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -82,8 +90,10 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu)
+    public function getRoles($roleId)
     {
-        //
+        $data = MenuToRole::where('role_id', $roleId)->get(['menu_id', 'role_id', 'action_id']);
+
+        return response()->json($data);
     }
 }

@@ -10,6 +10,10 @@ class Menu extends Model
     use HasFactory;
 
     public function actions(){
-        return $this->hasMany(MenuActivity::class, 'menu_id', 'id');
+        return $this->hasMany(ActivityMenu::class, 'menu_id', 'id');
+    }
+
+    public function roleActions(){
+        return $this->hasMany(ActivityMenu::class);
     }
 }

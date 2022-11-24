@@ -9,4 +9,5 @@ class MenuToUser extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'menu_to_users';
 }

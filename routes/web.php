@@ -10,7 +10,7 @@ use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemMasterController;
-use App\Http\Controllers\MenuActivityController;
+use App\Http\Controllers\ActivityMenuController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
@@ -77,11 +77,15 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
 
     Route::get('menus', [MenuController::class, 'index'])->name('menu.index');
+    Route::post('menus', [MenuController::class, 'store'])->name('menu.store');
+
+    Route::get('getRole/{roleId}', [MenuController::class, 'getRoles']);
+    
 
     Route::get('action', [ActionController::class, 'index'])->name('action.index');
 
-    Route::get('menuActivity', [MenuActivityController::class, 'permission'])->name('activity.paremission');
-    Route::post('menuActivity', [MenuActivityController::class, 'store'])->name('activity.store');
+    Route::get('ActivityMenu', [ActivityMenuController::class, 'permission'])->name('activity.paremission');
+    Route::post('ActivityMenu', [ActivityMenuController::class, 'store'])->name('activity.store');
 
     // Get all access for a user role
     Route::get('allAccess', [MenuToRoleController::class, 'index'])->name('all.access.index');
