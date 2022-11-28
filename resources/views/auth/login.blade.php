@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/fontawesome-free/css/all.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/adminlte.min.css') }}">
+    <script type="text/javascript">
+        localStorage.clear();
+    </script>
 </head>
 
 <body class="hold-transition login-page">
