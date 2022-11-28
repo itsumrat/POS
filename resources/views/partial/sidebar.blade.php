@@ -3,21 +3,53 @@
 		<ul class="main-nav">
 			<li><a class="nav-title" href="javascript:void(0)">Sales / Invoicing</a></li>
 			<li><a href="pos_dashboard.php">POS Dashboard</a></li>
+<<<<<<< HEAD
 			<li><a href="{{route('item.index')}}">Item Master</a></li>
+=======
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(1,1))
+				<li><a href="item_master.php">Item Master</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(2,1))
+>>>>>>> b63caca60655eabc07eb2695dd6864b6f1796b7b
 			<li><a href="{{route('inventory.index')}}">Inventory Master</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(3,1))
 			<li><a href="costing_pricing.php">Costing vs Pricing</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(4,1))
 			<li><a href="print_barcode.php">Print Barcode</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(5,1))
 			<li><a href="{{route('requisition.index')}}">Requisition / Pre-Order</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(6,1))
 			<li><a href="{{route('purchase.index')}}">Purchase Master</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(7,1))
 			<li><a href="customer_master.php">Customer Master</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(8,1))
 			<li><a href="{{route('vendor.index')}}">Vendor Master</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(22,1))
 			<li><a href="payables.php">Payables</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(23,1))
 			<li><a href="receivables.php">Receivables</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(24,1))
 			<li><a href="accounts.php">Manage Accounts</a></li>
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(9,1))
 			<li><a href="spos_settings.php">Standard POS Settings</a></li>
-			<!-- <li><a href="basic_pos.php">Basic Point of Sales</a></li> -->
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(10,1))
 			<li><a href="standard_pos.php">POS Window</a></li>
-			<!-- <li><a href="premium_pos.php">Premium Point of Sales</a></li> -->
+			@endif
+			@if( App\Http\Controllers\PermissionAccess::menuAccess(15,1))
+				<li><a href="{{ route('menu.index') }}">Permission</a></li>
+			@endif
+			
 		</ul>
 	</div>
 </div>

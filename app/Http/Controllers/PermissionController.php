@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Action;
 use App\Models\Menu;
-use App\Models\MenuActivity;
+use App\Models\ActivityMenu;
 use App\Models\MenuToRole;
 use App\Models\MenuToUser;
 use App\Models\Role;

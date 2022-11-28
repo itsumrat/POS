@@ -29,7 +29,7 @@ const Permission = () => {
 
         const url = localStorage.getItem('baseUrl');
 
-        axios.get(url+'/menuActivity')
+        axios.get(url+'/ActivityMenu')
         .then(function (response) {
 
             console.log(response.data);
@@ -109,7 +109,7 @@ const Permission = () => {
         }
             
 
-        axios.post(url+'/menuActivity', actionPermission)
+        axios.post(url+'/ActivityMenu', actionPermission)
         .then(function (response) {
 
             console.log(response);

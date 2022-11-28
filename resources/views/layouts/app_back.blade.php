@@ -50,6 +50,7 @@
         src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
     @yield('scripts')
+    @yield('styles')
 </body>
 
 </html>
