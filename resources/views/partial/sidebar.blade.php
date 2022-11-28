@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="left-nav">
 		<ul class="main-nav">
-			<li><a class="nav-title" href="javascript:void(0)">Sales / Invoicing</a></li>
-			<li><a href="pos_dashboard.php">POS Dashboard</a></li>
+			<li><a href="#">Sales / Invoicing</a></li>
+			<li><a class="{{ Request::is('pos/dashboard') == "pos/dashboard" ? 'nav-title' : '' }}" href="{{ route('pos.dashboard') }}">POS Dashboard</a></li>
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(1,1))
 				<li><a href="item_master.php">Item Master</a></li>
 			@endif

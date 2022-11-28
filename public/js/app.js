@@ -10743,9 +10743,6 @@ var Routeindex = function Routeindex() {
   var userInof = (0,react_redux__WEBPACK_IMPORTED_MODULE_36__.useSelector)(function (state) {
     return state.accessData.loginInfo;
   });
-  var posWindowStatus = (0,react_redux__WEBPACK_IMPORTED_MODULE_36__.useSelector)(function (state) {
-    return state.posRegister.posWindowStatus;
-  });
   var posWindowStatusStorage = localStorage.getItem('posWindowStatus_' + userInof.id);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsxs)(react_router_dom__WEBPACK_IMPORTED_MODULE_39__.Routes, {
@@ -10865,7 +10862,7 @@ var Routeindex = function Routeindex() {
           path: "otherSettings",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsx)(_components_pos_settings_OthersSettings__WEBPACK_IMPORTED_MODULE_18__["default"], {})
         })]
-      }), (menuAccess[10] == 10 && (posWindowStatus == 'Open' || posWindowStatusStorage == 'Open') || userInof.role_id == 1 && (posWindowStatus == 'Open' || posWindowStatusStorage == 'Open')) && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.Fragment, {
+      }), (menuAccess[10] == 10 && posWindowStatusStorage == 'Open' || userInof.role_id == 1 && posWindowStatusStorage == 'Open') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_39__.Route, {
           exact: true,
           path: "print/:id",

@@ -11,6 +11,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemMasterController;
 use App\Http\Controllers\ActivityMenuController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
@@ -26,6 +27,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VatController;
+
 use App\Http\Controllers\VendorTypeController;
 use App\Http\Controllers\VendorController;
 use Illuminate\Http\Request;
@@ -53,6 +55,11 @@ Route::post('user/login', [LoginController::class, 'authenticate'])->name('user.
 Route::middleware(['middleware' => 'auth'])->group(function () {
 
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    Route::get('/pos/dashboard', [HomeController::class, 'index'])->name('pos.dashboard');
+    Route::post('/pos/dashboard', [HomeController::class, 'store'])->name('pos.dashboard');
+    Route::get('/get/register/{register}', [HomeController::class, 'getRegister'])->name('pos.register');
+   
+    
 
 
     Route::get('user', [UserController::class, 'index'])->name('user.data');
@@ -60,12 +67,6 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     Route::post('user', [UserController::class, 'store'])->name('user.store');
     Route::post('user/{uniqueId}', [UserController::class, 'update'])->name('user.update');
-
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-    // return view('home');
-    Route::view('/home/{path?}', 'home')->where('/home', '.*');
-    Route::view('/home/{name}/{path?}', 'home')->where('/home', '.*');
-    // Route::view('/home', 'home')->where('/home', '.*');
 
     Route::get('role', [RoleController::class, 'index'])->name('role.list');
     Route::post('role', [RoleController::class, 'store'])->name('role.store');
@@ -231,6 +232,17 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     Route::get('/open/{transactionId}', [SellTransactionController::class, 'getHold'])->name('sale.transaction.getHold');
     Route::get('/print/{transactionId}', [SellTransactionController::class, 'print'])->name('sale.transaction.print');
+
+
+
+    // for React js
+
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // return view('home');
+    Route::view('/home/{path?}', 'reactHome')->where('/home', '.*');
+    Route::view('/home/{name}/{path?}', 'reactHome')->where('/home', '.*');
+    // Route::view('/home', 'home')->where('/home', '.*');
+
 
 
 

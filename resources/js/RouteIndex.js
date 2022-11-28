@@ -45,7 +45,6 @@ const Routeindex = () => {
 
     const menuAccess = useSelector((state) => state.accessData.menuPermissions)
     const userInof = useSelector((state) => state.accessData.loginInfo)
-    const posWindowStatus = useSelector((state) => state.posRegister.posWindowStatus)
     const posWindowStatusStorage = localStorage.getItem('posWindowStatus_'+userInof.id);
 
         return (
@@ -146,7 +145,7 @@ const Routeindex = () => {
                     }
                     
                     {
-                        (menuAccess[10] == 10 && ( posWindowStatus == 'Open' || posWindowStatusStorage == 'Open' ) || userInof.role_id == 1 && ( posWindowStatus == 'Open' || posWindowStatusStorage == 'Open' ) ) && 
+                        (menuAccess[10] == 10 && ( posWindowStatusStorage == 'Open' ) || userInof.role_id == 1 && ( posWindowStatusStorage == 'Open' ) ) && 
                             <>
                                 <Route exact path="print/:id" element={<Print/>}></Route> 
                                 <Route exact path="standard_pos" element={<Standardpos/>}>                   
