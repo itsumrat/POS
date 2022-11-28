@@ -27,7 +27,7 @@ class ItemMasterController extends Controller
     {
 
         if (!PermissionAccess::viewAccess($this->menuId, 1)) {
-            return response()->json('Sorry');
+            return view('errors.401');
         }
         $departments = Department::get();
         $sizes = Size::get();

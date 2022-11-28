@@ -5,10 +5,9 @@
 			<li><a class="{{ Request::is('pos/dashboard') == " pos/dashboard" ? 'nav-title' : '' }}"
 					href="{{ route('pos.dashboard') }}">POS Dashboard</a></li>
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(1,1))
-			<li><a href="item_master.php">Item Master</a></li>
+			<li><a href="{{route('item.index')}}">Item Master</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(2,1))
-			>>>>>>> b63caca60655eabc07eb2695dd6864b6f1796b7b
 			<li><a href="{{route('inventory.index')}}">Inventory Master</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(3,1))
@@ -24,7 +23,7 @@
 			<li><a href="{{route('purchase.index')}}">Purchase Master</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(7,1))
-			<li><a href="customer_master.php">Customer Master</a></li>
+			<li><a href="{{route('customer.index')}}">Customer Master</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(8,1))
 			<li><a href="{{route('vendor.index')}}">Vendor Master</a></li>

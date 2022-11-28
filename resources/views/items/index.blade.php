@@ -1,5 +1,11 @@
 @extends('layouts.app_back')
 @section('content')
+@php
+$edit = App\Http\Controllers\PermissionAccess::viewAccess(1,3);
+$delete = App\Http\Controllers\PermissionAccess::viewAccess(1,4);
+$view = App\Http\Controllers\PermissionAccess::viewAccess(1,1);
+$add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
+@endphp
 <div class="row">
 	<div class="top-action">
 		<div class="tv-tabs">
@@ -8,9 +14,13 @@
 		</div>
 		<input class="tv-radio" id="tv-tab-1" name="tv-group" type="radio" checked="checked" />
 		<div class="tv-content">
+			@if($add)
+
 			<h3>Item Master</h3>
+
 			<p><i>Fill up. *marks are mandatory field!</i></p>
 			<div class="entry-form">
+
 				<form action="{{ route('item.store') }}" method="POST">
 					@csrf
 					<div class="row">
@@ -83,6 +93,7 @@
 					</div>
 				</form>
 			</div>
+			@endif
 		</div>
 
 
@@ -143,7 +154,12 @@
 					<td>{{$item->size->name}}</td>
 					<td>{{$item->color->name}}</td>
 					<td>{{$item->sale_price}}</td>
-					<td><i class="fa fa-pencil"></i></td>
+
+					@if($edit)
+					<td><i class="fa fa-pencil"></i>
+						@endif
+						<i class="fa fa-pencil"></i>
+						<i class="fa fa-pencil"></i>/td>
 				</tr>
 				@endforeach
 			</tbody>

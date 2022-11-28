@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
+    private $menuId = 6;
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +17,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return Customer::with('type')->orderBy('id','desc')->paginate(20);
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
+            return view('errors.401');
+        }
+        $customer_types = CustomerType::orderBy('id', 'asc')->get();
+
+        $customers = Customer::with('type')->orderBy('id', 'desc')->get();
+        return view('customer.index', compact('customers', 'customer_types'));
+
     }
 
 
@@ -27,10 +36,10 @@ class CustomerController extends Controller
      */
     public function customerList()
     {
-        return Customer::with('type')->orderBy('id','desc')->get();
+        return Customer::with('type')->orderBy('id', 'desc')->get();
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
