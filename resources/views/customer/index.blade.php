@@ -1,4 +1,105 @@
 @extends('layouts.app_back')
+@section('styles')
+<style>
+	/* 1. Ensure this sits above everything when visible */
+	.modal {
+		position: absolute;
+		z-index: 10000;
+		/* 1 */
+		top: 0;
+		left: 0;
+		visibility: hidden;
+		width: 100%;
+		height: 100%;
+	}
+
+	.modal.is-visible {
+		visibility: visible;
+	}
+
+	.modal-overlay {
+		position: fixed;
+		z-index: 10;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: hsla(0, 0%, 0%, 0.5);
+		visibility: hidden;
+		opacity: 0;
+		transition: visibility 0s linear 0.3s, opacity 0.3s;
+	}
+
+	.modal.is-visible .modal-overlay {
+		opacity: 1;
+		visibility: visible;
+		transition-delay: 0s;
+	}
+
+	.modal-wrapper {
+		position: absolute;
+		z-index: 9999;
+		top: 6em;
+		left: 50%;
+		width: 32em;
+		margin-left: -16em;
+		background-color: #fff;
+		box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
+	}
+
+	.modal-transition {
+		transition: all 0.3s 0.12s;
+		transform: translateY(-10%);
+		opacity: 0;
+	}
+
+	.modal.is-visible .modal-transition {
+		transform: translateY(0);
+		opacity: 1;
+	}
+
+	.modal-header,
+	.modal-content {
+		padding: 1em;
+	}
+
+	.modal-header {
+		position: relative;
+		background-color: #fff;
+		box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.06);
+		border-bottom: 1px solid #e8e8e8;
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 0;
+		right: 0;
+		padding: 1em;
+		color: #aaa;
+		background: none;
+		border: 0;
+	}
+
+	.modal-close:hover {
+		color: #777;
+	}
+
+	.modal-heading {
+		font-size: 1.125em;
+		margin: 0;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	}
+
+	.modal-content>*:first-child {
+		margin-top: 0;
+	}
+
+	.modal-content>*:last-child {
+		margin-bottom: 0;
+	}
+</style>
+@endsection
 @section('content')
 @php
 $edit = App\Http\Controllers\PermissionAccess::viewAccess(1,3);
@@ -93,6 +194,7 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 								<td>
 									<i class="fa fa-eye"></i>
 									<i class="fa fa-pencil"></i>
+									<!-- <a class="modal-toggle" href="#"></a> -->
 									<i class="fa fa-money"></i>
 								</td>
 							</tr>
@@ -187,15 +289,46 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 		</div>
 	</div>
 </div>
+<div class="modal">
+	<div class="modal-overlay modal-toggle"></div>
+	<div class="modal-wrapper modal-transition">
+		<div class="modal-header">
+			<button class="modal-close modal-toggle"><svg class="icon-close icon" viewBox="0 0 32 32">
+					<use xlink:href="#icon-close"></use>
+				</svg></button>
+			<h2 class="modal-heading">This is a modal</h2>
+		</div>
+
+		<div class="modal-body">
+			<div class="modal-content">
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit eum delectus, libero, accusantium
+					dolores
+					inventore obcaecati placeat cum sapiente vel laboriosam similique totam id ducimus aperiam, ratione
+					fuga
+					blanditiis maiores.</p>
+				<button class="modal-toggle">Update</button>
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('scripts')
+
 <script>
 	$(document).ready(function () {
 		$('#customer-table').DataTable({
 			scrollX: false,
 		});
 	});
+</script>
+<script>
+	// Quick & dirty toggle to demonstrate modal toggle behavior
+	$('.modal-toggle').on('click', function (e) {
+		e.preventDefault();
+		$('.modal').toggleClass('is-visible');
+	});
+
 </script>
 
 @endsection

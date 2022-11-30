@@ -21,10 +21,11 @@
     <link rel="stylesheet" href="{{ asset('/') }}css/layout.css">
     <link rel="stylesheet" href="{{ asset('/') }}css/color.css">
     <link rel="stylesheet" href="{{ asset('/') }}css/master.css">
-    <link rel="stylesheet" href="{{ asset('/') }}css/modal.css">
+    <!-- <link rel="stylesheet" href="{{ asset('/') }}css/modal.css"> -->
     <link rel="stylesheet" href="{{ asset('/') }}css/pos.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    @yield('styles')
 
 </head>
 

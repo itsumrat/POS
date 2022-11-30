@@ -16,6 +16,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PosSettingsController;
 use App\Http\Controllers\PosTransactionController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RegisterController;
@@ -58,8 +59,8 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::get('/pos/dashboard', [HomeController::class, 'index'])->name('pos.dashboard');
     Route::post('/pos/dashboard', [HomeController::class, 'store'])->name('pos.dashboard');
     Route::get('/get/register/{register}', [HomeController::class, 'getRegister'])->name('pos.register');
-   
-    
+
+
 
 
     Route::get('user', [UserController::class, 'index'])->name('user.data');
@@ -81,7 +82,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('menus', [MenuController::class, 'store'])->name('menu.store');
 
     Route::get('getRole/{roleId}', [MenuController::class, 'getRoles']);
-    
+
 
     Route::get('action', [ActionController::class, 'index'])->name('action.index');
 
@@ -93,6 +94,8 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
 
 
+    //Settings
+    Route::get('pos_settings', [PosSettingsController::class, 'index'])->name('settings.index');
 
 
     Route::get('allRole', [RoleController::class, 'allRole'])->name('role.all.role');
