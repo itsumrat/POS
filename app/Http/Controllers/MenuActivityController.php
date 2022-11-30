@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Models\MenuActivity;
+use App\Models\ActivityMenu;
 use App\Models\MenuToRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class MenuActivityController extends Controller
+class ActivityMenuController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -71,10 +71,10 @@ class MenuActivityController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\MenuActivity  $menuActivity
+     * @param  \App\Models\ActivityMenu  $ActivityMenu
      * @return \Illuminate\Http\Response
      */
-    public function show(MenuActivity $menuActivity)
+    public function show(ActivityMenu $ActivityMenu)
     {
         //
     }
@@ -82,10 +82,10 @@ class MenuActivityController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\MenuActivity  $menuActivity
+     * @param  \App\Models\ActivityMenu  $ActivityMenu
      * @return \Illuminate\Http\Response
      */
-    public function edit(MenuActivity $menuActivity)
+    public function edit(ActivityMenu $ActivityMenu)
     {
         //
     }
@@ -94,10 +94,10 @@ class MenuActivityController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\MenuActivity  $menuActivity
+     * @param  \App\Models\ActivityMenu  $ActivityMenu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MenuActivity $menuActivity)
+    public function update(Request $request, ActivityMenu $ActivityMenu)
     {
         //
     }
@@ -105,10 +105,10 @@ class MenuActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MenuActivity  $menuActivity
+     * @param  \App\Models\ActivityMenu  $ActivityMenu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MenuActivity $menuActivity)
+    public function destroy(ActivityMenu $ActivityMenu)
     {
         //
     }
@@ -117,12 +117,12 @@ class MenuActivityController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\MenuActivity  $menuActivity
+     * @param  \App\Models\ActivityMenu  $ActivityMenu
      * @return \Illuminate\Http\Response
      */
     static public function actionCheck($menuId, $actionId){
         
-        $check = MenuActivity::where('menu_id', $menuId)->where('action_id', $actionId)->count();
+        $check = ActivityMenu::where('menu_id', $menuId)->where('action_id', $actionId)->count();
         return $check;
     }
 }

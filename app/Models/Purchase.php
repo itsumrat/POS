@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MenuActivity extends Model
+class Purchase extends Model
 {
     use HasFactory;
-
-    protected $table = 'menu_actions';
-
-
+    protected $table = 'purchases';
+    protected $guarded = [];
 }

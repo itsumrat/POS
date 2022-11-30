@@ -38,8 +38,7 @@ class PosTransactionController extends Controller
      */
     public function store(Request $request)
     {
-
-        
+       
 
         if($request->status == "Return"){
             $transaction = $request->oldTransactionId;

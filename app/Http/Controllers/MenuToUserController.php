@@ -14,7 +14,7 @@ class MenuToUserController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**

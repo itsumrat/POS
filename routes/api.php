@@ -2,16 +2,19 @@
 
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\MenuActivityController;
+use App\Http\Controllers\ActivityMenuController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuToRoleController;
 use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\PurchaseCotroller;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\RequisitionCotroller;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +26,7 @@ use Illuminate\Support\Facades\Auth;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
+// Get Requisition  Index
 
 // Route::middleware(['middleware' => 'auth'])->group(function () {
 
@@ -40,8 +43,8 @@ use Illuminate\Support\Facades\Auth;
 
 //     Route::get('action', [ActionController::class, 'index'])->name('action.index');
 
-//     Route::get('menuActivity', [MenuActivityController::class, 'permission'])->name('activity.paremission');
-//     Route::post('menuActivity', [MenuActivityController::class, 'store'])->name('activity.store');
+//     Route::get('ActivityMenu', [ActivityMenuController::class, 'permission'])->name('activity.paremission');
+//     Route::post('ActivityMenu', [ActivityMenuController::class, 'store'])->name('activity.store');
 
 //     // Get all access for a user role
 //     Route::get('allAccess', [MenuToRoleController::class, 'index'])->name('all.access.index');

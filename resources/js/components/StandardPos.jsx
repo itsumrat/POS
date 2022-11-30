@@ -37,6 +37,7 @@ const Standardpos = () => {
     const [customer, setCustomer] = useState('modal');
     const [customerLists, setCustomerLists] = useState({});
     const [customerId, setCustomerId] = useState(1);
+    const [customerType, setCustomerType] = useState({ type: [] })
 
     
     
@@ -76,6 +77,7 @@ const Standardpos = () => {
         // Call Transaction List
         getLatestTransaction()
         customerList()
+        getCustomerType()
 
        
 
@@ -91,6 +93,21 @@ const Standardpos = () => {
         }
         
     }, [saleStatus])
+
+    const getCustomerType = () => {
+
+        setIsLoading(true)
+        axios.get('/customer_type')
+            .then(function (response) {
+
+                setCustomerType({ type: response.data });
+                setIsLoading(false);
+
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
 
     const customerList = (e) => {
 
@@ -399,13 +416,17 @@ const Standardpos = () => {
     }
 
     const addCustomer = () => {
-        console.log("hello");
+
         setCustomer('modal target');
         setDisplay('');
     }
 
     const slectedCustomer = (e) => {
         setCustomerId(e.value);
+    }
+
+    const slectedCustomerCallBack = (customer_id) => {
+        setCustomerId(customer_id.id);
     }
 
     const close = () => {
@@ -646,7 +667,7 @@ const Standardpos = () => {
 
             <div id="cash" className={ customer } style={{ display: display }}>
                 <div className="modal-content">
-                   <Customer />
+                   <Customer functionClose={close} types={customerType} slectedCustomer={slectedCustomerCallBack}/>
                 </div>
             </div>
 

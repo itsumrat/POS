@@ -19,7 +19,13 @@ class Purchasemaster extends Component {
                                     <h3>Purchase</h3>
                                     <div className="entry-form">
                                         <form action="">
+
                                             <div className="row">
+                                            <div className="col-3">
+                                                    <select name="" id="">
+                                                        <option value="">Select Requisition</option>
+                                                    </select>
+                                                </div>
                                                 <div className="col-3">
                                                     <select name="" id="">
                                                         <option value="">Select Vendor</option>
@@ -273,7 +279,6 @@ class Purchasemaster extends Component {
                                                         <th width="10%">Other Charges</th>
                                                         <th width="5%">Discount</th>
                                                         <th width="10%">Grand Total</th>
-                                                        <th width="10%">Payment Status</th>
                                                         <th width="10%">Receive Status</th>
                                                         <th width="8%">...</th>
                                                     </tr>
@@ -288,7 +293,6 @@ class Purchasemaster extends Component {
                                                         <td>0.00</td>
                                                         <td>0.00</td>
                                                         <td>15,000.00</td>
-                                                        <td>Partial</td>
                                                         <td>Received</td>
                                                         <td>
                                                             <i className="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;
