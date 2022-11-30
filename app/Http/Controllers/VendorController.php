@@ -72,6 +72,8 @@ class VendorController extends Controller
         Vendor::create($data);
 
         return $this->index();
+
+
     }
 
     /**

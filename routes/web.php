@@ -208,6 +208,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::get('customer/{search}', [CustomerController::class, 'search'])->name('customer.search');
     Route::get('customerList', [CustomerController::class, 'customerList'])->name('customer.customerList');
 
+    // Get Vendor Index
+    Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
+    Route::post('vendor', [VendorController::class, 'store'])->name('vendor.store');
+    Route::post('vendor/{uniqueId}', [VendorController::class, 'update'])->name('vendor.update');
+    Route::get('vendor/{search}', [VendorController::class, 'search'])->name('vendor.search');
+    Route::get('vendorList', [VendorController::class, 'vendorList'])->name('vendor.vendorList');
+
 
     // Get Vendor Type Index
     Route::get('vat', [VatController::class, 'index'])->name('vat.type.index');
