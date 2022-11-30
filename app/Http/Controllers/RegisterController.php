@@ -17,7 +17,7 @@ class RegisterController extends Controller
      */
     public function index()
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
@@ -43,22 +43,18 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
-
-        $data[$request->name] = $request->inputValue;
-        $data['created_by'] = Auth::user()->id;
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
+        $data['name'] = $request->name;
+        $data['created_by'] = Auth::user()->id;
         $data['updated_by'] = Auth::user()->id;
-
-
-        
         $dataStore = Register::create($data);
-
-        Session::put('registerNo', $request->inputValue);
-
-        return response()->json($dataStore);
+        Session::put('registerNo', $request->name);
+        //return $this->index();
+        //return response()->json($dataStore);
+        return back();
     }
 
     /**
@@ -92,13 +88,13 @@ class RegisterController extends Controller
      */
     public function update(Request $request, $uniqueId)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 3)){
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
 
         $data[$request->name] = $request->inputValue;
         $data['updated_by'] = Auth::user()->id;
-        
+
         Register::where('unique_id', $uniqueId)->update($data);
         $updateData = Register::where('unique_id', $uniqueId)->first();
 
@@ -112,7 +108,7 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\Register  $vat
      * @return \Illuminate\Http\Response
-     */ 
+     */
 
     public function List()
     {
