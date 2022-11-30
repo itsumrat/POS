@@ -97,7 +97,7 @@
                         
                         localStorage.setItem('posWindowStatus_'+userInfo, data);
 
-                        return window.location.href = "home/standard_pos";
+                        return window.location.href = "/home/standard_pos";
 
 
                     }
