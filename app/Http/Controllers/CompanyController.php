@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CustomerType;
-use App\Models\Register;
-use App\Models\Role;
 use App\Models\Company;
-use App\Models\Vat;
-use App\Models\User;
-use App\Models\VendorType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-class PosSettingsController extends Controller
+class CompanyController extends Controller
 {
-
-    private $menuId = 9;
     /**
      * Display a listing of the resource.
      *
@@ -23,17 +17,6 @@ class PosSettingsController extends Controller
     public function index()
     {
         //
-        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
-            return view('errors.401');
-        }
-        $register = Register::get();
-        $vat = Vat::get();
-        $customer_types = CustomerType::get();
-        $vendor_types = VendorType::get();
-        $roles = Role::get();
-        $users = User::with('role')->get();
-        $companies = Company::get();
-        return view('settings.index', compact('register', 'vat', 'customer_types', 'vendor_types', 'roles', 'users', 'companies'));
     }
 
     /**
@@ -55,6 +38,25 @@ class PosSettingsController extends Controller
     public function store(Request $request)
     {
         //
+        $profilePath = public_path('assets/img/companies/');
+        if ($request->Hasfile('profile_image')) {
+            $imageName = Str::slug($request->name, '_') . '_' . rand(1000000, 9999999);
+            $extenstion = $request->file('profile_image')->getClientOriginalExtension();
+
+            $request->profile_image->move($profilePath, $imageName . '.' . $extenstion);
+
+            $data['image'] = $imageName . '.' . $extenstion;
+        }
+        $data['unique_id'] = UniqueController::uniqueId('unique_id');
+        $data['name'] = $request->name;
+        $data['contact_no'] = $request->contact_no;
+        $data['address'] = $request->address;
+        $data['trade_license_no'] = $request->trade_license_no;
+        $data['tin_no'] = $request->tin_no;
+        $data['created_by'] = Auth::user()->id;
+        $data['updated_by'] = Auth::user()->id;
+        Company::create($data);
+        return back();
     }
 
     /**

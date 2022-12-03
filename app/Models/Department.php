@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     use HasFactory;
+    protected $fillable = ['unique_id', 'name', 'created_by', 'updated_by'];
 
     protected $table = 'departments';
     protected $guarded = [];

@@ -16,7 +16,7 @@ class CustomerTypeController extends Controller
      */
     public function index()
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
@@ -31,7 +31,7 @@ class CustomerTypeController extends Controller
      */
     public function create()
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
     }
@@ -44,17 +44,18 @@ class CustomerTypeController extends Controller
      */
     public function store(Request $request)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
-
-        $data['name'] = $request->customerValue;
+        dd($request);
+        $data['name'] = $request->name;
         $data['created_by'] = Auth::user()->id;
         $data['unique_id'] = UniqueController::checkUniqueId('unique_id', 'vendor_type');
         $data['updated_by'] = Auth::user()->id;
-        
+
         CustomerType::create($data);
-        return response()->json($data);
+        //return response()->json($data);
+        return back();
     }
 
     /**
@@ -65,11 +66,11 @@ class CustomerTypeController extends Controller
      */
     public function search($search)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
-        $data = CustomerType::where('unique_id', "LIKE", '%'. $search .'%' )->orWhere('name', "LIKE", '%'. $search .'%' )->get();
+        $data = CustomerType::where('unique_id', "LIKE", '%' . $search . '%')->orWhere('name', "LIKE", '%' . $search . '%')->get();
         return response()->json($data);
     }
 
@@ -95,13 +96,13 @@ class CustomerTypeController extends Controller
      */
     public function update(Request $request, $uniqueId)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 3)){
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
 
         $data[$request->name] = $request->customerValue;
         $data['updated_by'] = Auth::user()->id;
-        
+
         CustomerType::where('unique_id', $uniqueId)->update($data);
         return response()->json($data);
     }
@@ -114,7 +115,7 @@ class CustomerTypeController extends Controller
      */
     public function destroy($id)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 4)){
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
     }

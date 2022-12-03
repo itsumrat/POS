@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ColorController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\DepartmentController;
@@ -190,8 +191,13 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('vendor_type/{uniqueId}', [VendorTypeController::class, 'update'])->name('vendor.type.update');
     Route::get('vendor_type/{search}', [VendorTypeController::class, 'search'])->name('vendor.type.search');
 
+    // Get Company Type Index
+    Route::get('company', [CompanyController::class, 'index'])->name('company.index');
+    Route::post('company', [CompanyController::class, 'store'])->name('company.store');
+    Route::post('company/{uniqueId}', [CompanyController::class, 'update'])->name('company.update');
+    Route::get('company/{search}', [CompanyController::class, 'search'])->name('company.search');
     // Get Vendor Type Index
-    Route::get('customer_type', [CustomerTypeController::class, 'index'])->name('customer.type.index');
+    Route::get('company', [CustomerTypeController::class, 'index'])->name('customer.type.index');
     Route::post('customer_type', [CustomerTypeController::class, 'store'])->name('customer.type.store');
     Route::post('customer_type/{uniqueId}', [CustomerTypeController::class, 'update'])->name('customer.type.update');
     Route::get('customer_type/{search}', [CustomerTypeController::class, 'search'])->name('customer.type.search');

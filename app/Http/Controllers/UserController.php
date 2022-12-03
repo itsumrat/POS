@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class UserController extends Controller
 {
 
-   
+
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +34,7 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-   
+
     /**
      * Store a newly created resource in storage.
      *
@@ -43,17 +43,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        
 
         $profilePath = public_path('assets/img/users/');
 
-        if($request->Hasfile('profile_pic')){
-            $imageName = Str::slug($request->name, '_').'_'.rand(1000000,9999999);
+        if ($request->Hasfile('profile_pic')) {
+            $imageName = Str::slug($request->name, '_') . '_' . rand(1000000, 9999999);
             $extenstion = $request->file('profile_pic')->getClientOriginalExtension();
 
-            $request->profile_pic->move($profilePath, $imageName.'.'.$extenstion);
+            $request->profile_pic->move($profilePath, $imageName . '.' . $extenstion);
 
-            $data['profile_pic'] = $imageName.'.'.$extenstion;
+            $data['profile_pic'] = $imageName . '.' . $extenstion;
         }
 
 
@@ -63,14 +62,14 @@ class UserController extends Controller
         $data['joining_date'] = date('Y-m-d', strtotime($request->joining_date));
         $data['salary'] = $request->salary;
         $data['staff_id'] = $request->staff_id;
-        
+
         $data['password'] = bcrypt($request->password);
-        $data['email'] = Str::slug($request->name, '_').'_'.rand(1000000,9999999).'@mail.com';
+        $data['email'] = Str::slug($request->name, '_') . '_' . rand(1000000, 9999999) . '@mail.com';
         $data['unique_id'] = UniqueController::uniqueId('unique_id', 'users');
-        
+
         User::create($data);
 
-        return $this->allUser();
+        return back();
     }
 
     /**
@@ -87,21 +86,21 @@ class UserController extends Controller
         $user = User::where('unique_id', $uniqueId)->first();
 
         $request->validate([
-            'staff_id' => 'required|unique:users,staff_id,'.$user->id,
+            'staff_id' => 'required|unique:users,staff_id,' . $user->id,
         ]);
 
 
-        if($request->Hasfile('profile_pic')){
-            $imageName = Str::slug($request->name, '_').'_'.rand(1000000,9999999);
+        if ($request->Hasfile('profile_pic')) {
+            $imageName = Str::slug($request->name, '_') . '_' . rand(1000000, 9999999);
             $extenstion = $request->file('profile_pic')->getClientOriginalExtension();
 
-            $request->profile_pic->move($profilePath, $imageName.'.'.$extenstion);
+            $request->profile_pic->move($profilePath, $imageName . '.' . $extenstion);
 
-            $user->profile_pic = $imageName.'.'.$extenstion;
+            $user->profile_pic = $imageName . '.' . $extenstion;
         }
 
 
-        if($request->password != "" ){
+        if ($request->password != "") {
             $user->password = bcrypt($request->password);
         }
 
@@ -111,7 +110,7 @@ class UserController extends Controller
         $user->joining_date = date('Y-m-d', strtotime($request->joining_date));
         $user->salary = $request->salary;
         $user->staff_id = $request->staff_id;
-        
+
         // $data = User::where('unique_id', $uniqueId)->update($userUpdate);
         $user->save();
 

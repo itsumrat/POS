@@ -18,14 +18,14 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
         return Department::orderBy('id', 'DESC')->get();
     }
 
-    
+
 
     /**
      * Store a newly created resource in storage.
@@ -36,17 +36,18 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
 
-        if(!PermissionAccess::viewAccess($this->menuId, 2)){
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
 
-        $data[$request->name] = $request->departmentValue;
+        $data['name'] = $request->name;
         $data['created_by'] = Auth::user()->id;
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
         $data['updated_by'] = Auth::user()->id;
-        
+
         Department::create($data);
-        return response()->json($data);
+        return back();
+        //return response()->json($data);
     }
 
 
@@ -59,14 +60,14 @@ class DepartmentController extends Controller
      */
     public function search($search)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 1)){
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return response()->json('Sorry');
         }
 
-        $data = Department::where('unique_id', "LIKE", '%'. $search .'%' )->orWhere('name', "LIKE", '%'. $search .'%' )->get();
+        $data = Department::where('unique_id', "LIKE", '%' . $search . '%')->orWhere('name', "LIKE", '%' . $search . '%')->get();
         return response()->json($data);
     }
-    
+
 
     /**
      * Update the specified resource in storage.
@@ -77,13 +78,13 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, $uniqueId)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 3)){
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
 
         $data[$request->name] = $request->departmentValue;
         $data['updated_by'] = Auth::user()->id;
-        
+
         Department::where('unique_id', $uniqueId)->update($data);
         return response()->json($data);
     }
@@ -96,7 +97,7 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        if(!PermissionAccess::viewAccess($this->menuId, 4)){
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
     }

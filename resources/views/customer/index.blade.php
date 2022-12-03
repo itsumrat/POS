@@ -193,8 +193,8 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 								<td>{{$customer->openning_balance}}</td>
 								<td>
 									<i class="fa fa-eye"></i>
-									<i class="fa fa-pencil"></i>
-									<!-- <a class="modal-toggle" href="#"></a> -->
+									<a class="modal-toggle" href="#"> <i class="fa fa-pencil"></i>
+									</a>
 									<i class="fa fa-money"></i>
 								</td>
 							</tr>
