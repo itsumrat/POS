@@ -11,7 +11,7 @@
 			<li><a href="{{route('inventory.index')}}">Inventory Master</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(3,1))
-			<li><a href="costing_pricing.php">Costing vs Pricing</a></li>
+			<li><a href="{{route('costing.index')}}">Costing vs Pricing</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(4,1))
 			<li><a href="print_barcode.php">Print Barcode</a></li>

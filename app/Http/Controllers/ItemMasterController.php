@@ -144,7 +144,7 @@ class ItemMasterController extends Controller
     public function getPost($barcode)
     {
         //dd($barcode);
-        $item = ItemMaster::with('unit', 'size', 'color')->where('barcode', $barcode)->first();
+        $item = ItemMaster::with('unit', 'size', 'color', 'brand')->where('barcode', $barcode)->first();
 
         return $item;
     }
