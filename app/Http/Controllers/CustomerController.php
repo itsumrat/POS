@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\CustomerType;
+use App\Models\SellTransaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,7 +24,9 @@ class CustomerController extends Controller
         $customer_types = CustomerType::orderBy('id', 'asc')->get();
 
         $customers = Customer::with('type')->orderBy('id', 'desc')->get();
-        return view('customer.index', compact('customers', 'customer_types'));
+        $transactions = SellTransaction::latest()->paginate(10);
+        return view('customer.index', compact('customers', 'customer_types', 'transactions'));
+
 
     }
 

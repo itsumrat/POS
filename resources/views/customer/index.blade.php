@@ -254,7 +254,7 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 							</div>
 						</div>
 					</div>
-					<table class="tbl-1 mb-10">
+					<table class="tbl-1 mb-10" id="customer-table">
 						<thead>
 							<tr>
 								<th width="15%">Trnx Date</th>
@@ -266,24 +266,20 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td>10-Apr-22</td>
-								<td>Trnx#1001</td>
-								<td>Grocery Purchase</td>
-								<td>8,700.00</td>
-								<td>8,700.00</td>
-								<td>0.00</td>
-							</tr>
-							<tr>
-								<td>10-Apr-22</td>
-								<td>Trnx#4344</td>
-								<td>Grocery Purchase</td>
-								<td>2,800.00</td>
-								<td>2,000.00</td>
-								<td>800.00</td>
-							</tr>
+							@foreach ($transactions as $transaction)
+								<tr>
+									<td>{{ date('d-M-y', strtotime($transaction->created_at)) }} </td>
+									<td>{{ $transaction->transaction_id }}</td>
+									<td>{{ $transaction->payment_type }}</td>
+									<td>{{ $transaction->total_amount }}</td>
+									<td>{{ $transaction->total_amount }}</td>
+									<td>0.00</td>
+								</tr>
+							@endforeach
+							
 						</tbody>
 					</table>
+						{!! $transactions->links() !!}
 				</div>
 			</div>
 		</div>
