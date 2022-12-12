@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountGroupController;
+use App\Http\Controllers\AccountSubGroupController;
+use App\Http\Controllers\AccountTypeController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoryController;
@@ -102,6 +106,27 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     Route::get('allRole', [RoleController::class, 'allRole'])->name('role.all.role');
 
+
+    // Get All Account Types
+    Route::get('account-types', [AccountTypeController::class, 'index'])->name('account-types.index');
+    Route::post('account-types', [AccountTypeController::class, 'store'])->name('account-types.store');
+    Route::post('account-types/{uniqueId}', [AccountTypeController::class, 'update'])->name('account-types.update');
+    Route::get('account-types/{search}', [AccountTypeController::class, 'search'])->name('account-types.search');
+
+
+    // Get All Account Groups
+    Route::get('account-groups', [AccountGroupController::class, 'index'])->name('account-groups.index');
+    Route::post('account-groups', [AccountGroupController::class, 'store'])->name('account-groups.store');
+    Route::post('account-groups/{uniqueId}', [AccountGroupController::class, 'update'])->name('account-groups.update');
+    Route::get('account-groups/{search}', [AccountGroupController::class, 'search'])->name('account-groups.search');
+
+
+    // Get All Account Subgroups
+    Route::get('account-subgroups', [AccountSubGroupController::class, 'index'])->name('account-subgroups.index');
+    Route::post('account-subgroups', [AccountSubGroupController::class, 'store'])->name('account-subgroups.store');
+    Route::post('account-subgroups/{uniqueId}', [AccountSubGroupController::class, 'update'])->name('account-subgroups.update');
+    Route::get('account-subgroups/{search}', [AccountSubGroupController::class, 'search'])->name('account-subgroups.search');
+
     // Get All Index
     Route::get('departments', [DepartmentController::class, 'index'])->name('department.index');
     Route::post('department', [DepartmentController::class, 'store'])->name('department.store');
@@ -178,6 +203,10 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::get('vendor/{search}', [VendorController::class, 'search'])->name('vendor.search');
     Route::get('vendorList', [VendorController::class, 'vendorList'])->name('vendor.vendorList');
 
+
+
+    // MAnage Accounts
+    Route::get('account', [AccountController::class, 'index'])->name('account.index');
     //Requisition
 
     // Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');

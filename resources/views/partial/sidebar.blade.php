@@ -35,7 +35,7 @@
 			<li><a href="receivables.php">Receivables</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(24,1))
-			<li><a href="accounts.php">Manage Accounts</a></li>
+			<li><a href="{{route('account.index')}}">Manage Accounts</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(9,1))
 			<li><a href="{{route('settings.index')}}">Standard POS Settings</a></li>
