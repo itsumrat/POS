@@ -29,10 +29,10 @@
 			<li><a href="{{route('vendor.index')}}">Vendor Master</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(22,1))
-			<li><a href="payables.php">Payables</a></li>
+			<li><a href="{{route('payables.index')}}">Payables</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(23,1))
-			<li><a href="receivables.php">Receivables</a></li>
+			<li><a href="">Receivables</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(24,1))
 			<li><a href="{{route('account.index')}}">Manage Accounts</a></li>

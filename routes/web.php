@@ -20,11 +20,13 @@ use App\Http\Controllers\ActivityMenuController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuToRoleController;
+use App\Http\Controllers\PayablesController;
 use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PosSettingsController;
 use App\Http\Controllers\PosTransactionController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\ReceivablesController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RegisterSellController;
 use App\Http\Controllers\RequisitionController;
@@ -126,6 +128,16 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('account-subgroups', [AccountSubGroupController::class, 'store'])->name('account-subgroups.store');
     Route::post('account-subgroups/{uniqueId}', [AccountSubGroupController::class, 'update'])->name('account-subgroups.update');
     Route::get('account-subgroups/{search}', [AccountSubGroupController::class, 'search'])->name('account-subgroups.search');
+    // Payables
+    Route::get('payables', [PayablesController::class, 'index'])->name('payables.index');
+    Route::post('payables', [PayablesController::class, 'store'])->name('payables.store');
+    Route::post('payables/{uniqueId}', [PayablesController::class, 'update'])->name('payables.update');
+    Route::get('payables/{search}', [PayablesController::class, 'search'])->name('payables.search');
+    // Receivables
+    Route::get('receivables', [ReceivablesController::class, 'index'])->name('receivables.index');
+    Route::post('receivables', [ReceivablesController::class, 'store'])->name('receivables.store');
+    Route::post('receivables/{uniqueId}', [ReceivablesController::class, 'update'])->name('receivables.update');
+    Route::get('receivables/{search}', [ReceivablesController::class, 'search'])->name('receivables.search');
 
     // Get All Index
     Route::get('departments', [DepartmentController::class, 'index'])->name('department.index');
@@ -208,9 +220,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     // MAnage Accounts
     Route::get('account', [AccountController::class, 'index'])->name('account.index');
     //Requisition
-
-    // Route::get('requisition', [RequisitionCotroller::class, 'index'])->name('requisition.index');
-    // Route::post('requisition', [RequisitionCotroller::class, 'store'])->name('requisition.store');
+    Route::post('account', [AccountController::class, 'store'])->name('account.store');
     // Route::post('requisition/{uniqueId}', [RequisitionCotroller::class, 'update'])->name('requisition.update');
     // Route::get('requisition/{search}', [RequisitionCotroller::class, 'search'])->name('requisition.search');
     // Route::get('requisitionList', [RequisitionCotroller::class, 'requisitionList'])->name('requisition.requisitionList');

@@ -3,18 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
-use App\Models\AccountGroup;
-use App\Models\AccountSubGroup;
-use App\Models\AccountType;
+use App\Models\Vendor;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 
-class AccountController extends Controller
+class PayablesController extends Controller
 {
-
-    private $menuId = 24;
-
+    private $menuId = 22;
     /**
      * Display a listing of the resource.
      *
@@ -22,17 +17,14 @@ class AccountController extends Controller
      */
     public function index()
     {
+        //
         if (!PermissionAccess::viewAccess($this->menuId, 1)) {
             return view('errors.401');
         }
-        // $customer_types = CustomerType::orderBy('id', 'asc')->get();
+        $vendors = Vendor::orderBy('id', 'asc')->get();
+        $accounts = Account::orderBy('id', 'desc')->get();
+        return view('payables.index', compact('vendors', 'accounts'));
 
-        $groups = AccountGroup::orderBy('id', 'desc')->get();
-        $types = AccountType::orderBy('id', 'desc')->get();
-        $subgroups = AccountSubGroup::orderBy('id', 'desc')->get();
-
-        $accounts = Account::with('type','group','subgroup')->get();
-        return view('accounts.index', compact('groups', 'types', 'subgroups','accounts'));
     }
 
     /**
@@ -54,23 +46,6 @@ class AccountController extends Controller
     public function store(Request $request)
     {
         //
-        //
-        //
-        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
-            return response()->json('Sorry');
-        }
-
-        $data['name'] = $request->name;
-        $data['account_type'] = $request->account_type;
-        $data['account_group'] = $request->account_group;
-        $data['account_subgroup'] = $request->account_subgroup;
-        $data['opening_balance'] = $request->opening_balance;
-        $data['created_by'] = Auth::user()->id;
-        $data['unique_id'] = UniqueController::uniqueId('unique_id');
-        $data['updated_by'] = Auth::user()->id;
-
-        Account::create($data);
-        return back();
     }
 
     /**

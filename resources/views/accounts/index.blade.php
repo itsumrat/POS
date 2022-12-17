@@ -11,15 +11,16 @@
 		<div class="tv-content">
 			<h3>Create Account</h3>
 			<div class="entry-form">
-				<form action="">
+				<form action="{{ route('account.store') }}" method="POST">
+					@csrf
 					<div class="row">
 						<div class="col-4">
 							<label class="control-label" for="">Account Name</label>
-							<input type="text" class="form-control" value="Cash A/C">
+							<input type="text" class="form-control" name="name" value="Cash A/C">
 						</div>
 						<div class="col-2">
 							<label class="control-label" for="">Select Type</label>
-							<select name="type" id="">
+							<select name="account_type" id="">
 								@foreach ($types as $type)
 								<option value="{{$type->id}}">{{$type->name}}</option>
 								@endforeach
@@ -27,7 +28,7 @@
 						</div>
 						<div class="col-3">
 							<label class="control-label" for="">Account Group</label>
-							<select name="group" id="">
+							<select name="account_group" id="">
 								@foreach ($groups as $group)
 								<option value="{{$group->id}}">{{$group->name}}</option>
 								@endforeach
@@ -35,7 +36,7 @@
 						</div>
 						<div class="col-3">
 							<label class="control-label" for="">Account Sub Group</label>
-							<select name="subgroup" class="form-control" id="">
+							<select name="account_subgroup" class="form-control" id="">
 								@foreach ($subgroups as $subgroup)
 								<option value="{{$subgroup->id}}">{{$subgroup->name}}</option>
 								@endforeach
@@ -43,7 +44,7 @@
 						</div>
 						<div class="col-2">
 							<label class="control-label" for="">Opening Balance</label>
-							<input type="text" class="form-control" placeholder="0.00">
+							<input type="text" class="form-control" name="opening_balance" placeholder="0.00">
 						</div>
 					</div>
 					<div class="row">
@@ -78,18 +79,22 @@
 				</tr>
 			</thead>
 			<tbody>
+				@foreach ($accounts as $account)
 				<tr>
-					<td>Cash A/C</td>
-					<td>Balance Sheet</td>
-					<td>Asset</td>
-					<td>Current Asset</td>
-					<td>12000.00</td>
+
+					<td>{{$account->name}}</td>
+					<td>{{$account->type->name}}</td>
+					<td>{{$account->group->name}}</td>
+					<td>{{$account->subgroup->name}}</td>
+					<td>{{$account->opening_balance}}</td>
 					<td>
 						<i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-pencil"></i>&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-money"></i>
 					</td>
 				</tr>
+				@endforeach
+
 			</tbody>
 		</table>
 		<table class="tbl-1 mb-10">
