@@ -9,56 +9,57 @@
 		<div class="tv-content">
 			<h3>Receive Payment</h3>
 			<div class="entry-form">
-				<form action="">
+                <form action="{{ route('receivables.store') }}" method="POST">
+                    @csrf
 					<div class="row">
 						<div class="col-2">
 							<label class="control-label" for="">Receive Date</label>
-							<input type="date" class="form-control" value="11-06-22">
+							<input type="date" class="form-control" name="payment_date" value="">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-3">
-							<label class="control-label" for="">Select Account</label>
-							<select name="" id="">
-								<option value="">Customer One</option>
-								<option value="">Customer Two</option>
-								<option value="">Customer Three</option>
+							<label class="control-label" for="vendor_id">Select Account</label>
+							<select name="vendor_id" id="vendor_id">
+								@foreach ($vendors as $vendor)
+								<option value="{{$vendor->id}}">{{$vendor->vendor_name}}</option>
+								@endforeach
+
 							</select>
 						</div>
 						<div class="col-2">
-							<label class="control-label" for="">Balance</label>
-							<input type="text" class="form-control" readonly value="23592.00">
+							<label class="control-label" for="current_balance">Balance</label>
+							<input type="text" name="current_balance" class="form-control current_balance" readonly value="">
 						</div>
 						<div class="col-2">
-							<label class="control-label" for="">Receive Amount</label>
-							<input type="text" class="form-control" placeholder="Type Receive Amount">
+							<label class="control-label" for="receive_amount">Receive Amount</label>
+							<input type="text"  name="receive_amount"  class="form-control" placeholder="Type Receive Amount">
 						</div>
 						<div class="col-2">
-							<label class="control-label" for="">Receive Type</label>
-							<select name="" id="">
-								<option value="">Cash</option>
-								<option value="">Bkash</option>
-								<option value="">Card/Bank</option>
+							<label class="control-label" for="payment_type">Receive Type</label>
+							<select name="payment_type" id="">
+								<option value="Cash">Cash</option>
+								<option value="Bkash">Bkash</option>
+								<option value="Card/Bank">Card/Bank</option>
 							</select>
 						</div>
 						<div class="col-3">
-							<label class="control-label" for="">Cheque / Ref</label>
-							<input type="text" class="form-control" placeholder="Cheque/Ref">
+							<label class="control-label" for="cheque_no">Cheque / Ref</label>
+							<input type="text" class="form-control" name="cheque_no" placeholder="Cheque/Ref">
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-3">
-							<label class="control-label" for="">Select Source</label>
-							<select name="" id="">
-								<option value="">Cash-1001</option>
-								<option value="">Islami Bank-6674</option>
-								<option value="">City Bank-7701</option>
-								<option value="">Bkash Merchant-7879</option>
+							<label class="control-label" for="account_id">Select Source</label>
+							<select name="account_id" id="">
+								@foreach ($accounts as $account)
+								<option value="{{$account->id}}">{{$account->name}}</option>
+								@endforeach
 							</select>
 						</div>
 						<div class="col-9">
-							<label class="control-label" for="">Type Note</label>
-							<input type="text" class="form-control" placeholder="Note">
+							<label class="control-label" for="description">Type Note</label>
+							<input type="text" name="description" class="form-control" placeholder="Note">
 						</div>
 					</div>
 					<div class="row">
@@ -98,23 +99,47 @@
 				</tr>
 			</thead>
 			<tbody>
+				@foreach ($receivables as $item)
 				<tr>
-					<td>11-06-22</td>
-					<td>S-10001</td>
-					<td>Mostafa Kamal</td>
+					<td>{{$item->created_at}}</td>
+					<td>{{$item->vendor_id}}</td>
+					<td>{{$item->vendor->vendor_name}}</td>
 					<td>Due Receive</td>
-					<td>RV-10001</td>
-					<td>12000.00</td>
-					<td>23-06-22</td>
-					<td>Note</td>
+					<td>{{$item->ref_no}}</td>
+					<td>{{$item->receive_amount}}</td>
+					<td>{{$item->payment_date}}</td>
+					<td>{{$item->description}}</td>
 					<td>
 						<i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-pencil"></i>&nbsp;&nbsp;&nbsp;
 						<i class="fa fa-money"></i>
 					</td>
 				</tr>
+				@endforeach
+
 			</tbody>
 		</table>
 	</div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+$('#vendor_id').on('change', function() {
+		var productId = $(this).val();
+		console.log(productId);
+		if (productId) {
+			$.ajax({
+				url: 'vendorsingle/'+ productId,
+				type: "GET",
+				dataType: "json",
+				success: function (data) {
+					console.log(data);
+					$('.current_balance').val(data.current_balance);
+				}
+			});
+		}
+	});
+</script>
+
 @endsection

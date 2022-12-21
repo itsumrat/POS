@@ -65,6 +65,7 @@ class AccountController extends Controller
         $data['account_group'] = $request->account_group;
         $data['account_subgroup'] = $request->account_subgroup;
         $data['opening_balance'] = $request->opening_balance;
+        $data['current_balance'] = $request->opening_balance;
         $data['created_by'] = Auth::user()->id;
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
         $data['updated_by'] = Auth::user()->id;

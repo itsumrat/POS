@@ -213,6 +213,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
     Route::post('vendor', [VendorController::class, 'store'])->name('vendor.store');
     Route::post('vendor/{uniqueId}', [VendorController::class, 'update'])->name('vendor.update');
     Route::get('vendor/{search}', [VendorController::class, 'search'])->name('vendor.search');
+    Route::get('vendorsingle/{id}', [VendorController::class, 'vendorSingle'])->name('vendor.single');
     Route::get('vendorList', [VendorController::class, 'vendorList'])->name('vendor.vendorList');
 
 

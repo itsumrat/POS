@@ -32,7 +32,7 @@
 			<li><a href="{{route('payables.index')}}">Payables</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(23,1))
-			<li><a href="">Receivables</a></li>
+			<li><a href="{{route('receivables.index')}}">Receivables</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(24,1))
 			<li><a href="{{route('account.index')}}">Manage Accounts</a></li>

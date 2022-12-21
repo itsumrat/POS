@@ -27,7 +27,7 @@
                             <input type="text" class="form-control" name="address" placeholder="Address">
                         </div>
                         <div class="col-2">
-                            <input type="text" class="form-control" name="openning_balance" placeholder="Opening Balance">
+                            <input type="text" class="form-control" name="opening_balance" placeholder="Opening Balance">
                         </div>
                         <div class="col-2">
                             <select name="vendor_type" id="">
@@ -85,7 +85,7 @@
                                 <td>{{$vend->nid_no}}</td>
                                 <td>{{$vend->address}}</td>
                                 <td>{{$vend->vendor_type}}</td>
-                                <td>{{$vend->openning_balance}}</td>
+                                <td>{{$vend->opening_balance}}</td>
                                 <td>
                                     <i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;
                                     <a href="#vendorModal" class="vendor-modal" data-id="{{ $vend->id }}"><i class="fa fa-pencil"></i>&nbsp;&nbsp;&nbsp;</a>
@@ -208,7 +208,7 @@
                     <input type="text" name="address" id="address" class="form-control" placeholder="Address ">
                 </div>
                 <div class="row">
-                    <input type="text" name="openning_balance" id="openning_balance" class="form-control" placeholder="Address ">
+                    <input type="text" name="opening_balance" id="opening_balance" class="form-control" placeholder="Address ">
                 </div>
                 <div class="row">
                     <select name="vendor_type" id="">

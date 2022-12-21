@@ -9,7 +9,7 @@ class Account extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['unique_id', 'name', 'created_by', 'updated_by','account_type','account_group','account_subgroup','opening_balance'];
+    protected $fillable = ['unique_id', 'name', 'created_by', 'updated_by','account_type','account_group','account_subgroup','opening_balance','current_balance'];
 
     protected $table = 'accounts';
 

@@ -59,14 +59,15 @@ class VendorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
 
-        // if (!PermissionAccess::viewAccess($this->menuId, 2)) {
-        //     return response()->json('Sorry');
-        // }
+        if (!PermissionAccess::viewAccess($this->menuId, 2)) {
+            return response()->json('Sorry');
+        }
 
         $data = $request->all();
         $data['created_by'] = Auth::user()->id;
+        $data['current_balance'] = $request->opening_balance;
         $data['updated_by'] = Auth::user()->id;
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
         Vendor::create($data);
@@ -99,7 +100,17 @@ class VendorController extends Controller
             return response()->json('Sorry');
         }
 
-        $data = VEndor::where('unique_id', "LIKE", '%' . $search . '%')->orWhere('vendor_name', "LIKE", '%' . $search . '%')->get();
+        $data = Vendor::where('unique_id', "LIKE", '%' . $search . '%')->orWhere('vendor_name', "LIKE", '%' . $search . '%')->get();
+        return response()->json($data);
+    }
+    public function vendorSingle($id)
+    {
+        //dd($id);
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
+            return response()->json('Sorry');
+        }
+
+        $data = Vendor::where('id', $id )->first();
         return response()->json($data);
     }
 
