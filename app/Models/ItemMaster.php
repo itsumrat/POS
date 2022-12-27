@@ -34,4 +34,12 @@ class ItemMaster extends Model
     public function color(){
         return $this->belongsTo(Color::class, 'color_id', 'id');
     }
+    // public function stock(){
+    //     return $this->hasOne(Stock::class,'item_id','id');
+    // }
+
+    public function stock()
+    {
+        return $this->hasOne(Stock::class,'item_id','id');
+    }
 }

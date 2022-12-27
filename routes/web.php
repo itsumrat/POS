@@ -25,6 +25,7 @@ use App\Http\Controllers\PermissionAccess;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PosSettingsController;
 use App\Http\Controllers\PosTransactionController;
+use App\Http\Controllers\PrintBarcodeController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ReceivablesController;
 use App\Http\Controllers\RegisterController;
@@ -99,6 +100,9 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 
     // Get all access for a user role
     Route::get('allAccess', [MenuToRoleController::class, 'index'])->name('all.access.index');
+//barcode
+
+Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.index');
 
 
 

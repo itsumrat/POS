@@ -14,7 +14,7 @@
 			<li><a href="{{route('costing.index')}}">Costing vs Pricing</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(4,1))
-			<li><a href="print_barcode.php">Print Barcode</a></li>
+			<li><a href="{{route('barcode.index')}}">Print Barcode</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(5,1))
 			<li><a href="{{route('requisition.index')}}">Requisition / Pre-Order</a></li>

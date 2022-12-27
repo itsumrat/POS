@@ -136,8 +136,9 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 					<th width="10%">Cat</th>
 					<th width="10%">Brand</th>
 					<th width="10%">UoM</th>
-					<th width="10%">Size</th>
-					<th width="10%">Color</th>
+					<th width="7%">Size</th>
+					<th width="7%">Color</th>
+					<th width="6%">Qty</th>
 					<th width="10%">Price</th>
 					<th width="5%">...</th>
 				</tr>
@@ -153,13 +154,13 @@ $add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
 					<td>{{$item->unit->name}}</td>
 					<td>{{$item->size->name}}</td>
 					<td>{{$item->color->name}}</td>
+					<td>{{isset($item->stock->quantity) ? $item->stock->quantity : '0' }}</td>
 					<td>{{$item->sale_price}}</td>
-
 					@if($edit)
 					<td><i class="fa fa-pencil"></i>
 						@endif
 						<i class="fa fa-pencil"></i>
-						<i class="fa fa-pencil"></i>/td>
+						<i class="fa fa-pencil"></i></td>
 				</tr>
 				@endforeach
 			</tbody>

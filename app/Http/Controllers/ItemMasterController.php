@@ -36,7 +36,7 @@ class ItemMasterController extends Controller
         $units = Unit::get();
         $colors = Color::get();
 
-        $items = ItemMaster::with(['department', 'category', 'brand', 'unit', 'size', 'color'])->orderBy('id', "desc")->paginate(env("DATA_PER_PAGE"));
+        $items = ItemMaster::with(['department', 'category', 'brand', 'unit', 'size', 'color','stock'])->orderBy('id', "asc")->paginate(env("DATA_PER_PAGE"));
         // return response()->json($items);
 
         return view('items.index', compact('items', 'departments', 'sizes', 'categories', 'brands', 'units', 'colors'));

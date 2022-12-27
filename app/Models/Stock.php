@@ -9,4 +9,9 @@ class Stock extends Model
 {
     use HasFactory;
     protected $table = 'stocks';
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }
