@@ -41,7 +41,7 @@
 			<li><a href="{{route('settings.index')}}">Standard POS Settings</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(10,1))
-			<li><a href="standard_pos.php">POS Window</a></li>
+			<li><a href="{{ url('/home/standard_pos') }}">POS Window</a></li>
 			@endif
 			@if( App\Http\Controllers\PermissionAccess::menuAccess(15,1))
 			<li><a href="{{ route('menu.index') }}">Permission</a></li>

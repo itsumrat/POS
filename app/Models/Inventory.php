@@ -9,5 +9,6 @@ class Inventory extends Model
 {
     use HasFactory;
     protected $table = 'inventory_history';
+    protected $guarded = [];
 
 }

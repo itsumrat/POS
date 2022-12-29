@@ -249,6 +249,16 @@ Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.i
     // Route::get('costing/{search}', [CostingController::class, 'getPost'])->name('item.search');
     // Get Vendor Type Index
     Route::get('company', [CustomerTypeController::class, 'index'])->name('customer.type.index');
+    /**
+     * 2022-12-29
+     * Majdul Islam
+     */
+        Route::get('customer_type', [CustomerTypeController::class, 'index'])->name('customer.type.index');
+     /**
+     * 2022-12-29
+     * Majdul Islam
+     */
+
     Route::post('customer_type', [CustomerTypeController::class, 'store'])->name('customer.type.store');
     Route::post('customer_type/{uniqueId}', [CustomerTypeController::class, 'update'])->name('customer.type.update');
     Route::get('customer_type/{search}', [CustomerTypeController::class, 'search'])->name('customer.type.search');

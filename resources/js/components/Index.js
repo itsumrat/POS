@@ -22,18 +22,16 @@ const Index = () => {
 
     const [url, setUrl] = useState({ url: '' });
 
-     
-
     useEffect(() => {
         showLoader,
-        localStorage.setItem('baseUrl', url.url);
+        // localStorage.setItem('baseUrl', url.url);
         fatchUserPermission();
         fatchLoginuser();
         fatcthAccess();
     }, []);
 
     const fatcthAccess = () => {
-        axios.get(url.url+'/allAccess')
+        axios.get('/allAccess')
         .then(function (response) {
             console.log(response.data);
             dispatch(userAccess(response.data));
@@ -47,7 +45,7 @@ const Index = () => {
 
 
     const fatchLoginuser = () => {
-        axios.get(url.url+'/user')
+        axios.get('/user')
         .then(function (response) {
             dispatch(userInfo(response.data));
 
@@ -60,7 +58,7 @@ const Index = () => {
 
 
     const fatchUserPermission = () => {
-        axios.get(url.url+'/access')
+        axios.get('/access')
         .then(function (response) {
             dispatch(permission(response.data));
         })

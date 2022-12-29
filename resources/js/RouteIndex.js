@@ -145,7 +145,7 @@ const Routeindex = () => {
                     }
                     
                     {
-                        (menuAccess[10] == 10 && ( posWindowStatusStorage == 'Open' ) || userInof.role_id == 1 && ( posWindowStatusStorage == 'Open' ) ) && 
+                        // (menuAccess[10] == 10 && ( posWindowStatusStorage == 'Open' ) || userInof.role_id == 1 && ( posWindowStatusStorage == 'Open' ) ) && 
                             <>
                                 <Route exact path="print/:id" element={<Print/>}></Route> 
                                 <Route exact path="standard_pos" element={<Standardpos/>}>                   

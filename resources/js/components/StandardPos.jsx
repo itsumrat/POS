@@ -138,12 +138,12 @@ const Standardpos = () => {
         setSearch(searchInput);
 
 
-        axios.get(url+'/product/'+searchInput)
+        axios.get('/product/'+searchInput)
         .then(function (response) {
 
             if(response.data == ""){
                 setIsLoading(false);
-                alert("No Data Found!")
+                alert("No Data Found or Out of Stock")
                 setSearch('');
                 return false;
             }
@@ -207,7 +207,7 @@ const Standardpos = () => {
 
     // Get Latest Transation
     const getLatestTransaction = () => {
-        axios.get(url+'/transactions')
+        axios.get('/transactions')
         .then(function (response) {
 
             setTransactions({
@@ -263,7 +263,7 @@ const Standardpos = () => {
             customer_id: customerId
         }        
 
-        axios.post(url+'/sales/', transactionData)
+        axios.post('/sales/', transactionData)
         .then(function (response) {
 
             setItems({
@@ -375,7 +375,7 @@ const Standardpos = () => {
     // Hold data open function goes here
     const openData = (transactionId) => {
 
-        axios.get(url+'/open/'+transactionId)
+        axios.get('/open/'+transactionId)
         .then(function (response) {
 
             setItems({

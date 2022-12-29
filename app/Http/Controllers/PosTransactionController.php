@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventory;
+use App\Models\ItemMaster;
 use App\Models\PosTransactions;
 use App\Models\SellTransaction;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -55,6 +58,7 @@ class PosTransactionController extends Controller
         $totalAmount = [];
         $totalQuanity = [];
 
+
         foreach($request->itemDatas as $item ) { 
             $data['barcode'] = $item['barcode'];
             $data['color'] = $item['color'];
@@ -62,8 +66,7 @@ class PosTransactionController extends Controller
             $data['price'] = $item['price'];
             $data['quantity'] = $item['quantity'];
             $data['size'] = $item['size'];
-            $data['total_amount'] = $item['price'];            
-            // $data['total_amount'] = $item['subTotal'];            
+            $data['total_amount'] = $item['price'];           
             $data['product_title'] = $item['product_title'];
             $data['unit'] = $item['unit'];
             $data['status'] = $request->status;
@@ -72,11 +75,28 @@ class PosTransactionController extends Controller
             $data['created_by'] = Auth::user()->id;
 
             $totalAmount[] = $item['price'];
-            // $totalAmount[] = $item['subTotal'];
             $totalQuanity[] = $item['quantity'];
 
             $allData[] = $data;
             $productId[] = $item['id'];
+
+
+            $stockData = ItemMaster::with('stock')->where('barcode', $item['barcode'])->first();
+
+            $inventory['barcode'] = $item['barcode'];
+            $inventory['status'] = 'Sales';
+            $inventory['item_id'] = $item['id'];
+            $inventory['stock_id'] = $stockData->stock->id;
+            $inventory['unique_id'] = UniqueController::checkUniqueId('unique_id', 'inventory_history');
+            $inventory['quantity'] = $item['quantity'];
+            $inventory['created_by'] = Auth::user()->id;
+            $inventory['updated_by'] = Auth::user()->id;
+
+            $quantity = ($stockData->stock->quantity - $item['quantity']);
+            Stock::where('id', $stockData->stock->id)->update(['quantity' => $quantity]);
+            Inventory::create($inventory);
+
+
         }
 
         
@@ -120,8 +140,6 @@ class PosTransactionController extends Controller
         if($request->status != "Return"){
             SellTransaction::where('transaction_id', $request->oldTransactionId)->delete();
         }
-
-        
 
         return $transaction;
     }

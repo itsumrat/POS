@@ -21,7 +21,7 @@ class MenuToRoleController extends Controller
             $accessData[$accesses->menu_id.'_'.$accesses->action_id] = $accesses->menu_id.'_'.$accesses->action_id;
         }
 
-        return $accessData;
+        return response()->json( $accessData);
     }
 
     /**

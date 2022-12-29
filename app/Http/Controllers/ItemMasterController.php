@@ -143,8 +143,10 @@ class ItemMasterController extends Controller
 
     public function getPost($barcode)
     {
-        //dd($barcode);
-        $item = ItemMaster::with('unit', 'size', 'color', 'brand')->where('barcode', $barcode)->first();
+
+        $item = ItemMaster::whereHas('stock', function ($query) {
+                $query->where('quantity', '>', 0);
+        })->with('unit', 'size', 'color', 'brand')->where('barcode', $barcode)->first();
 
         return $item;
     }

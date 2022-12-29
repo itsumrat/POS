@@ -10862,7 +10862,10 @@ var Routeindex = function Routeindex() {
           path: "otherSettings",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsx)(_components_pos_settings_OthersSettings__WEBPACK_IMPORTED_MODULE_18__["default"], {})
         })]
-      }), (menuAccess[10] == 10 && posWindowStatusStorage == 'Open' || userInof.role_id == 1 && posWindowStatusStorage == 'Open') && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.Fragment, {
+      }),
+      /*#__PURE__*/
+      // (menuAccess[10] == 10 && ( posWindowStatusStorage == 'Open' ) || userInof.role_id == 1 && ( posWindowStatusStorage == 'Open' ) ) && 
+      (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.Fragment, {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_38__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_39__.Route, {
           exact: true,
           path: "print/:id",
@@ -12730,14 +12733,14 @@ var Index = function Index() {
       setUrl = _useState2[1];
 
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
-    showLoader, localStorage.setItem('baseUrl', url.url);
+    showLoader, // localStorage.setItem('baseUrl', url.url);
     fatchUserPermission();
     fatchLoginuser();
     fatcthAccess();
   }, []);
 
   var fatcthAccess = function fatcthAccess() {
-    axios.get(url.url + '/allAccess').then(function (response) {
+    axios.get('/allAccess').then(function (response) {
       console.log(response.data);
       dispatch((0,_store_actions__WEBPACK_IMPORTED_MODULE_5__.userAccess)(response.data));
     })["catch"](function (error) {
@@ -12747,7 +12750,7 @@ var Index = function Index() {
   };
 
   var fatchLoginuser = function fatchLoginuser() {
-    axios.get(url.url + '/user').then(function (response) {
+    axios.get('/user').then(function (response) {
       dispatch((0,_store_actions__WEBPACK_IMPORTED_MODULE_5__.userInfo)(response.data));
     })["catch"](function (error) {
       // handle error
@@ -12756,7 +12759,7 @@ var Index = function Index() {
   };
 
   var fatchUserPermission = function fatchUserPermission() {
-    axios.get(url.url + '/access').then(function (response) {
+    axios.get('/access').then(function (response) {
       dispatch((0,_store_actions__WEBPACK_IMPORTED_MODULE_5__.permission)(response.data));
     })["catch"](function (error) {
       // handle error
@@ -15299,10 +15302,10 @@ var Standardpos = function Standardpos() {
     var searchInput = e.target.value;
     setIsLoading(true);
     setSearch(searchInput);
-    axios.get(url + '/product/' + searchInput).then(function (response) {
+    axios.get('/product/' + searchInput).then(function (response) {
       if (response.data == "") {
         setIsLoading(false);
-        alert("No Data Found!");
+        alert("No Data Found or Out of Stock");
         setSearch('');
         return false;
       }
@@ -15350,7 +15353,7 @@ var Standardpos = function Standardpos() {
 
 
   var getLatestTransaction = function getLatestTransaction() {
-    axios.get(url + '/transactions').then(function (response) {
+    axios.get('/transactions').then(function (response) {
       setTransactions({
         transactions: response.data.completed
       });
@@ -15392,7 +15395,7 @@ var Standardpos = function Standardpos() {
       flatFixedAmount: flatFixedAmount,
       customer_id: customerId
     };
-    axios.post(url + '/sales/', transactionData).then(function (response) {
+    axios.post('/sales/', transactionData).then(function (response) {
       setItems({
         items: []
       });
@@ -15476,7 +15479,7 @@ var Standardpos = function Standardpos() {
 
 
   var openData = function openData(transactionId) {
-    axios.get(url + '/open/' + transactionId).then(function (response) {
+    axios.get('/open/' + transactionId).then(function (response) {
       setItems({
         items: response.data.sales
       });
@@ -22198,9 +22201,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 function Print() {
-  // Url
-  var url = localStorage.getItem('baseUrl');
-
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     prints: []
   }),
@@ -22231,7 +22231,7 @@ function Print() {
   }, []); // Hold data open function goes here
 
   var printData = function printData(transactionId) {
-    axios.get(url + '/print/' + transactionId).then(function (response) {
+    axios.get('/print/' + transactionId).then(function (response) {
       setPrints({
         prints: response.data.sales
       });

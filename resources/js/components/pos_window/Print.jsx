@@ -9,8 +9,6 @@ import '../../../../public/css/custom.css';
 export default function Print() {
 
         
-    // Url
-	let url = localStorage.getItem('baseUrl');
 
     const [prints, setPrints] = useState({prints: []});
     const [transaction, setTransaction] = useState({ transaction: []});
@@ -39,7 +37,7 @@ export default function Print() {
      // Hold data open function goes here
      const printData = (transactionId) => {
 
-        axios.get(url+'/print/'+transactionId)
+        axios.get('/print/'+transactionId)
         .then(function (response) {
 
             setPrints({
