@@ -185,13 +185,18 @@ const Standardpos = () => {
         setTransactionFilter(searchInput);
 
 
-        axios.get(url+'/transactions/'+searchInput)
+        axios.get('/transactions/'+searchInput)
         .then(function (response) {
 
+            console.log(response.data.completed.sales);
+
             if(searchInput.length > 0){
-                setTransactions({
-                    transactions: response.data.completed
-                })
+                // setTransactions({
+                //     transactions: response.data.completed
+                    
+                // })
+                setItems({items: response.data.completed.sales});
+                
             }else{
                 getLatestTransaction();
             }

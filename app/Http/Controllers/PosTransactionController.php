@@ -43,12 +43,9 @@ class PosTransactionController extends Controller
     {
        
 
-        if($request->status == "Return"){
-            $transaction = $request->oldTransactionId;
-            
-        }else{
-            $transaction = UniqueController::checkUniqueId('transaction_id', 'sales');
-        }
+        
+        $transaction = UniqueController::checkUniqueId('transaction_id', 'sales');
+        
         
         $data['register_no'] = Auth::user()->register->register_no;
         $data['vat'] = 0;
@@ -92,21 +89,15 @@ class PosTransactionController extends Controller
             $inventory['created_by'] = Auth::user()->id;
             $inventory['updated_by'] = Auth::user()->id;
 
-            $quantity = ($stockData->stock->quantity - $item['quantity']);
-            Stock::where('id', $stockData->stock->id)->update(['quantity' => $quantity]);
+            if ($request->status != "Return") {
+                $quantity = ($stockData->stock->quantity - $item['quantity']);
+                Stock::where('id', $stockData->stock->id)->update(['quantity' => $quantity]);
+            }
             Inventory::create($inventory);
 
 
         }
 
-        
-        if($request->status == "Return"){
-
-            PosTransactions::where('transaction_id', $request->oldTransactionId)->whereIn('product_id', $productId)->delete();
-            
-        }else{
-            PosTransactions::where('transaction_id', $request->oldTransactionId)->delete();
-        }
 
         PosTransactions::insert($allData);
         
@@ -137,8 +128,16 @@ class PosTransactionController extends Controller
 
         SellTransaction::insert($trans);
 
-        if($request->status != "Return"){
-            SellTransaction::where('transaction_id', $request->oldTransactionId)->delete();
+        if($request->status == "Return"){
+
+            foreach ($request->itemDatas as $returnItem) {
+
+                $stockQuantity = Stock::where(['barcode' => $returnItem['barcode']])->first('quantity');
+                $stockUpdate['quantity'] = ($stockQuantity->quantity + (int)$returnItem['quantity']);
+                Stock::where('barcode', $returnItem['barcode'])->update($stockUpdate);
+            }
+
+            return Session::get('transactionId');
         }
 
         return $transaction;

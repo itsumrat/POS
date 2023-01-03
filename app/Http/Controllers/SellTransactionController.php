@@ -29,9 +29,10 @@ class SellTransactionController extends Controller
      */
     public function search($transactionId)
     {
-        $data['completed'] = SellTransaction::where('register_no', Session::get('posWindow'))
+        Session::put('transactionId', $transactionId);
+        $data['completed'] = SellTransaction::with('sales')->where('register_no', Session::get('posWindow'))
         ->where("transaction_id", "LIKE", "%".$transactionId."%")
-        ->orderBy('created_at', "DESC")->limit(5)->get();
+        ->orderBy('created_at', "DESC")->first();
         return $data;
     }
     
