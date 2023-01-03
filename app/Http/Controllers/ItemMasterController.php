@@ -118,8 +118,22 @@ class ItemMasterController extends Controller
         $data['updated_by'] = Auth::user()->id;
 
         ItemMaster::where('unique_id', $uniqueId)->update($data);
-        return response()->json($data);
+        // return response()->json($data);
+        return redirect()->back();
     }
+
+
+    /**
+     * Edit the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+     public function edit($uniqueId){
+        $data = ItemMaster::where('unique_id', $uniqueId)->first();
+        return response()->json($data);
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -127,11 +141,14 @@ class ItemMasterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uniqueId)
     {
         if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
+
+        ItemMaster::where('unique_id', $uniqueId)->delete();
+        return redirect()->back();
     }
 
     /**

@@ -182,7 +182,11 @@ Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.i
     // Item Master Index
     Route::get('item_master', [ItemMasterController::class, 'index'])->name('item.index');
     Route::post('item_master', [ItemMasterController::class, 'store'])->name('item.store');
+    Route::get('item_master/{uniqueId}', [ItemMasterController::class, 'edit'])->name('item.edit');
     Route::post('item_master/{uniqueId}', [ItemMasterController::class, 'update'])->name('item.update');
+
+    Route::get('item_master/{uniqueId}/delete', [ItemMasterController::class, 'destroy'])->name('item.destroy');
+
     Route::get('item_master/{search}', [ItemMasterController::class, 'search'])->name('item.search');
 
     Route::get('product/{search}', [ItemMasterController::class, 'getPost'])->name('item.search');
