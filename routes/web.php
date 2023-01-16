@@ -40,6 +40,7 @@ use App\Http\Controllers\VatController;
 
 use App\Http\Controllers\VendorTypeController;
 use App\Http\Controllers\VendorController;
+use App\Models\RequisitionDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -103,8 +104,7 @@ Route::middleware(['middleware' => 'auth'])->group(function () {
 //barcode
 
 Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.index');
-
-
+Route::get('generate-barcode', [PrintBarcodeController::class, 'generateBarcode'])->name('generate-barcode');
 
     //Settings
     Route::get('pos_settings', [PosSettingsController::class, 'index'])->name('settings.index');
@@ -135,12 +135,17 @@ Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.i
     // Payables
     Route::get('payables', [PayablesController::class, 'index'])->name('payables.index');
     Route::post('payables', [PayablesController::class, 'store'])->name('payables.store');
+    Route::get('payables/{uniqueId}', [PayablesController::class, 'edit'])->name('payables.edit');
+    Route::post('payables/{uniqueId}', [PayablesController::class, 'update'])->name('payables.update'); 
+    Route::get('payables/{uniqueId}/delete', [PayablesController::class, 'destroy'])->name('payables.destroy');
     Route::post('payables/{uniqueId}', [PayablesController::class, 'update'])->name('payables.update');
     Route::get('payables/{search}', [PayablesController::class, 'search'])->name('payables.search');
     // Receivables
     Route::get('receivables', [ReceivablesController::class, 'index'])->name('receivables.index');
     Route::post('receivables', [ReceivablesController::class, 'store'])->name('receivables.store');
+    Route::get('receivables/{uniqueId}', [ReceivablesController::class, 'edit'])->name('payables.edit');
     Route::post('receivables/{uniqueId}', [ReceivablesController::class, 'update'])->name('receivables.update');
+    Route::get('receivables/{uniqueId}/delete', [ReceivablesController::class, 'destroy'])->name('payables.destroy');
     Route::get('receivables/{search}', [ReceivablesController::class, 'search'])->name('receivables.search');
 
     // Get All Index
@@ -200,7 +205,11 @@ Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.i
     // Get Requisition  Index
     Route::get('requisition', [RequisitionController::class, 'index'])->name('requisition.index');
     Route::post('requisition', [RequisitionController::class, 'store'])->name('requisition.store');
+    Route::get('requisition/{uniqueId}', [RequisitionController::class, 'edit'])->name('requisition.edit');
     Route::post('requisition/{uniqueId}', [RequisitionController::class, 'update'])->name('requisition.update');
+    Route::get('requisition/{uniqueId}/delete', [RequisitionController::class, 'destroy'])->name('requisition.destroy');
+    Route::get('requisition-details/{uniqueId}/delete', [RequisitionController::class, 'destroyDetails'])->name('requisition-details.destroy');
+
     Route::get('requisition/{search}', [RequisitionController::class, 'search'])->name('requisition.search');
     Route::get('requisitionList', [RequisitionController::class, 'vendorList'])->name('requisition.requisitionList');
     Route::get('item/{search}', [RequisitionController::class, 'getItem']);
@@ -210,7 +219,12 @@ Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.i
     // Get Purchase  Index
     Route::get('purchase', [PurchaseController::class, 'index'])->name('purchase.index');
     Route::post('purchase', [PurchaseController::class, 'store'])->name('purchase.store');
+    Route::post('purchase-status', [PurchaseController::class, 'purchaseStatus'])->name('purchase-status.store');
+    Route::get('purchase/{uniqueId}', [PurchaseController::class, 'edit'])->name('purchase.edit');
     Route::post('purchase/{uniqueId}', [PurchaseController::class, 'update'])->name('purchase.update');
+    Route::get('purchase/{uniqueId}/delete', [PurchaseController::class, 'destroy'])->name('purchase.destroy');
+    Route::get('purchase-details/{uniqueId}/delete', [PurchaseController::class, 'destroyDetails'])->name('purchase-details.destroy');
+
     Route::get('purchase/{search}', [PurchaseController::class, 'search'])->name('purchase.search');
     Route::get('purchaseList', [PurchaseController::class, 'vendorList'])->name('purchase.purchaseList');
     Route::get('prequisition/{search}', [PurchaseController::class, 'requisition'])->name('prequisition.search');
@@ -219,7 +233,10 @@ Route::get('barcode', [PrintBarcodeController::class, 'index'])->name('barcode.i
     // Get Vendor  Index
     Route::get('vendor', [VendorController::class, 'index'])->name('vendor.index');
     Route::post('vendor', [VendorController::class, 'store'])->name('vendor.store');
+    Route::get('vendor/{uniqueId}', [VendorController::class, 'edit'])->name('vendor.edit');
     Route::post('vendor/{uniqueId}', [VendorController::class, 'update'])->name('vendor.update');
+    Route::get('vendor/{uniqueId}/delete', [VendorController::class, 'destroy'])->name('vendor.destroy');
+
     Route::get('vendor/{search}', [VendorController::class, 'search'])->name('vendor.search');
     Route::get('vendorsingle/{id}', [VendorController::class, 'vendorSingle'])->name('vendor.single');
     Route::get('vendorList', [VendorController::class, 'vendorList'])->name('vendor.vendorList');

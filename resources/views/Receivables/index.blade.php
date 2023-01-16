@@ -1,4 +1,41 @@
 @extends('layouts.app_back')
+@php
+$edit = App\Http\Controllers\PermissionAccess::viewAccess(1,3);
+$delete = App\Http\Controllers\PermissionAccess::viewAccess(1,4);
+$view = App\Http\Controllers\PermissionAccess::viewAccess(1,1);
+$add = App\Http\Controllers\PermissionAccess::viewAccess(1,2);
+@endphp
+@section('styles')
+<style>
+	.edit_modal {
+		width: 100%;
+		background: #0000001f;
+		height: 100%;
+		z-index: 999999999;
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+
+	.edit {
+		position: fixed;
+		top: 40px;
+		width: 70%;
+		display: none;
+		margin-left: 15%;
+	}
+
+	.edit .modal-close {
+		position: absolute;
+		z-index: 999;
+		top: -4px;
+		right: 10px;
+		font-size: 30px;
+	}
+</style>
+
+@endsection
 @section('content')
 <div class="row">
 	<div class="top-action">
@@ -75,7 +112,7 @@
 
 <div class="row">
 	<div class="bottom-report">
-		<div class="tbl-action-btn">
+		{{-- <div class="tbl-action-btn">
 			<div class="float-left col-3">
 				<input class="form-control" placeholder="Search by order#, name...">
 			</div>
@@ -83,8 +120,8 @@
 			<div class="float-right col-3">
 				<span>Filters <i class="fa fa-angle-down"></i></span> <i class="fa fa-ellipsis-h"></i>
 			</div>
-		</div>
-		<table class="tbl-1 mb-10">
+		</div> --}}
+		<table class="tbl-1 mb-10" id="receivables-table">
 			<thead>
 				<tr>
 					<th width="7%">Trnx Date</th>
@@ -110,9 +147,15 @@
 					<td>{{$item->payment_date}}</td>
 					<td>{{$item->description}}</td>
 					<td>
-						<i class="fa fa-eye"></i>&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-pencil"></i>&nbsp;&nbsp;&nbsp;
-						<i class="fa fa-money"></i>
+						@if($edit)
+						<a href="#"><i class="fa fa-pencil show_modal" data-item_id="{{ $item->unique_id }}">
+							</i></a>
+						@endif
+						@if($delete)
+						<a href="#"><i class="fa fa-trash delete_modal" data-item_id="{{ $item->unique_id }}">
+							</i></a>
+						{{-- <i class="fa fa-pencil"></i> --}}
+						@endif
 					</td>
 				</tr>
 				@endforeach
@@ -121,6 +164,61 @@
 		</table>
 	</div>
 </div>
+
+<div class="edit_modal">
+	<div id="return" class="edit">
+		<div class="modal-content">
+			<h6 class="bg-title">Edit Vendor</h6>
+
+			<div class="entry-form">
+
+				<form class="update_form" method="POST">
+					@csrf
+					<div class="row">
+						<div class="col-4">
+							<input type="text" name="payment_date" class="form-control payment_date_edit" value=""
+								placeholder="payment Date">
+						</div>
+ --}}
+						<div class="col-4">
+							<input type="text" name="receive_amount" class="form-control receive_amount_edit"
+								placeholder="Pay Amount">
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-4">
+							<select name="payment_type" class="form-control payment_type_edit">
+								<option value="Cash">Cash</option>
+								<option value="Bkash">Bkash</option>
+								<option value="Card/Bank">Card/Bank</option>
+							</select>
+						</div>
+						<div class="col-4">
+							<input type="text" name="cheque_no" class="form-control cheque_no_edit"
+								placeholder="Cheque No">
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-4">
+							<input type="text" name="description" class="form-control description_edit"
+								placeholder="description">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-12">
+							<button class="save-btn">Save</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<a href="" class="modal-close">&times;</a>
+		</div>
+	</div>
+</div>
+
 @endsection
 
 @section('scripts')
@@ -140,6 +238,67 @@ $('#vendor_id').on('change', function() {
 			});
 		}
 	});
+
+	$(document).on('click', '.show_modal', function(){
+
+let uniqueId = $(this).data('item_id');
+let updateUrl = '{{ url("receivables") }}/'+uniqueId;
+
+$.ajax({
+	method: "get",
+	url: "{{ url('receivables') }}/"+uniqueId,
+	success: function(res){
+	console.log(res);
+		// $( ".brand_edit").val(res.brand_id).change();
+		$( ".cheque_no_edit").val(res.cheque_no).change();
+		$( ".payment_type_edit").val(res.payment_type).change();
+		//$( ".opening_balance_edit").val(res.opening_balance).change();
+		//$( ".address_edit").val(res.address).change();
+		$( ".receive_amount_edit").val(res.receive_amount).change();
+		$( ".description_edit").val(res.description).change();
+		$( ".vendor_edit").val(res.vendor_id).change();
+		$( ".accounts_edit").val(res.account_id).change();
+		$( ".payment_date_edit").val(res.payment_date).change();
+		$('.update_form').attr('action', updateUrl)
+	},
+	error: function(xhr){
+		console.log(xhr);
+	}
+
+});
+
+$('.edit, .edit_modal').css("display", "block");
+})
+
+$(document).on('click', '.delete_modal', function(){
+
+let uniqueId = $(this).data('item_id');
+
+let confirmData = confirm("Are you confirm to delete this item!");
+
+if (confirmData == true) {
+$.ajax({
+	method: "get",
+	url: "{{ url('receivables') }}/"+uniqueId+'/delete',
+	success: function(res){
+		return location.reload();
+	},
+	error: function(xhr){
+		console.log("error");
+	}
+});
+} 
+
+
+
+
+})
+
+$(document).ready(function () {
+$('#receivables-table').DataTable({
+scrollX: false,
+});
+});
 </script>
 
 @endsection

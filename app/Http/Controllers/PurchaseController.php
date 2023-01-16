@@ -39,7 +39,7 @@ class PurchaseController extends Controller
         //     'vendor_types' => $vendor_types,
         //     'requisitions' => $requisitions,
         // ));
-        $purchases = Purchase::orderBy('id', "desc")->get();
+        $purchases = Purchase::orderBy('id', "asc")->get();
         return view('purchase.index', compact('vendor_types', 'requisitions', 'purchases'));
     }
 
@@ -71,6 +71,60 @@ class PurchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function purchaseStatus(Request $request)
+    {
+        $stock_info = $request->stock_info;
+        foreach ($stock_info as $v) {
+            $items = PurchaseDetails::where('purchase_id',  $v['id'])->get();
+
+            $has_data = Purchase::where('id',  $v['id'])->first();
+            if ($has_data) {
+                $has_data->status = $v['status'];
+                $has_data->save();
+            }
+            $purchases = PurchaseDetails::where('purchase_id',  $v['id'])->get();
+            if ($purchases) {
+                foreach ($purchases as $purchase) {
+
+                    $item = ItemMaster::with('unit', 'department', 'brand', 'size', 'color')->where('id', $purchase->item_id)->first();
+                    // $stock = 
+
+                    $has_stock = Stock::where('item_id',  $purchase->item_id)->first();
+                    if ($has_stock) {
+                        $has_stock->quantity += $purchase->quantity;
+                        $has_stock->save();
+                    } else {
+                        $stock = new Stock;
+                        $stock['unique_id'] = UniqueController::uniqueId('unique_id');
+                        $stock['barcode'] = $purchase->barcode;
+                        $stock['item_id'] =  $purchase->item_id;
+                        $stock['quantity'] = $purchase->quantity;
+                        $stock['uom'] = $purchase->uom;
+                        $stock['size'] = $item->size->name;
+                        $stock['color'] = $item->color->name;
+                        $stock['brand'] = $item->brand->name;
+                        $stock['department'] = $item->department->name;
+                        $stock['category'] = $item->category->name;
+                        $stock->save();
+                    }
+
+                    $stockHistory = new  StockHistory;
+                    $stockHistory['unique_id'] = UniqueController::uniqueId('unique_id');
+                    $stockHistory['barcode'] = $purchase->barcode;
+                    $stockHistory['item_id'] = $purchase->item_id;
+                    $stockHistory['quantity'] = $purchase->quantity;
+                    $stockHistory['created_by'] = Auth::user()->id;
+                    $stockHistory['updated_by'] = Auth::user()->id;
+                    $stockHistory->save();
+                }
+            }
+            //return $item;
+            Requisition::where('id', $has_data->requisition_no)->update(array('type' => 'purchased'));
+        }
+        return $this->index();
+
+    }
+
     public function store(Request $request)
     {
 
@@ -99,9 +153,10 @@ class PurchaseController extends Controller
         // $items = $request->itemDatas;
 
         $data['requisition_no'] = $request->requisition_id;
-        $data['description'] = $request->note;
         $data['purchase_no'] = $purchase_no;
+        $data['description'] = $request->note;
         $data['purchase_date'] = \Carbon\Carbon::now();
+        $data['status'] = 'Purchased';
         $data['unique_id'] = UniqueController::uniqueId('unique_id');
         $data['vendor_id'] = $request->vendor_id;
         $data['total'] = $request->item_total;
@@ -117,6 +172,7 @@ class PurchaseController extends Controller
             foreach ($barcodes as $key => $value) {
                 $Pus = new PurchaseDetails;
                 $Pus['purchase_no'] = $purchase_no;
+                $Pus['purchase_id'] = $purchase->id;
                 $Pus['unique_id'] = UniqueController::uniqueId('unique_id');
                 $Pus['item_id'] = $item_id[$key];
                 $Pus['barcode'] = $barcodes[$key];
@@ -127,40 +183,7 @@ class PurchaseController extends Controller
                 $Pus['new_unit_price'] = $new_unit_price[$key];
                 $Pus['subtotal'] = $sub_total[$key];
                 $Pus->save();
-
-                $item = ItemMaster::with('unit', 'department', 'brand', 'size', 'color')->where('id', $item_id[$key])->first();
-
-                // dd($item->department->name);
-                $has_stock = Stock::where('item_id',  $item_id[$key])->first();
-                if ($has_stock) {
-                    $has_stock->quantity += $qty[$key];
-                    $has_stock->save();
-                } else {
-                    $stock = new Stock;
-                    $stock['unique_id'] = UniqueController::uniqueId('unique_id');
-                    $stock['barcode'] = $barcodes[$key];
-                    $stock['item_id'] = $item_id[$key];
-                    $stock['quantity'] = $qty[$key];
-                    $stock['uom'] = $unit[$key];
-                    $stock['size'] = $item->size->name;
-                    $stock['color'] = $item->color->name;
-                    $stock['brand'] = $item->brand->name;
-                    $stock['department'] = $item->department->name;
-                    $stock['category'] = $item->category->name;
-                    $stock->save();
-                }
-
-                $stockHistory = new  StockHistory;
-                $stockHistory['unique_id'] = UniqueController::uniqueId('unique_id');
-                $stockHistory['barcode'] = $barcodes[$key];
-                $stockHistory['item_id'] = $item_id[$key];
-                $stockHistory['quantity'] = $qty[$key];
-                $stockHistory['created_by'] = Auth::user()->id;
-                $stockHistory['updated_by'] = Auth::user()->id;
-                $stockHistory->save();
             }
-
-            Requisition::where('id', $request->requisition_id)->update(array('type' => 'purchased'));
         }
         return $this->index();
     }
@@ -182,10 +205,10 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function edit($uniqueId){
+        $data = Purchase::with('details')->where('unique_id', $uniqueId)->first();
+        return response()->json($data);
+     }
 
     /**
      * Update the specified resource in storage.
@@ -197,25 +220,28 @@ class PurchaseController extends Controller
     public function update(Request $request, $uniqueId)
     {
         //
-
         if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
-        $data['requisition_no'] = $request->requisition_no;
-        $data['purchase_no'] = $request->purchase_no;
-        $data['purchase_date'] = \Carbon\Carbon::now();
-        $data['unique_id'] = UniqueController::uniqueId('unique_id');
-        $data['vendor_id'] = $request->vendor_id;
         $data['total'] = $request->total;
         $data['vat'] = $request->vat;
         $data['other_charge'] = $request->other_charge;
         $data['discount'] = $request->discount;
-        $data['description'] = $request->description;
         $data['grand_total'] = $request->grand_total;
         $data['updated_by'] = Auth::user()->id;
 
-        Purchase::where('unique_id', $uniqueId)->update($data);
-        return response()->json($data);
+        $purchase=Purchase::where('unique_id', $uniqueId)->update($data);
+        $items = $request->req_item_id;
+        $qty = $request->qty;
+        $sub_total = $request->sub_total;
+        if ($purchase) {
+            foreach ($items as $key => $value) {
+                $reqDetail['quantity'] = $qty[$key];
+                $reqDetail['subtotal'] = $sub_total[$key];
+                PurchaseDetails::where('id', $items[$key])->update($reqDetail);
+            }
+        }
+        return $this->index();
     }
     public function search($search)
     {
@@ -233,9 +259,24 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uniqueId)
     {
-        //
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
+            return response()->json('Sorry');
+        }
+        
+        Purchase::where('unique_id', $uniqueId)->delete();
+        return redirect()->back();
+    }
+
+    public function destroyDetails($uniqueId)
+    {
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
+            return response()->json('Sorry');
+        }
+
+        
+        PurchaseDetails::where('id', $uniqueId)->delete();
     }
 
     public function requisition($search)

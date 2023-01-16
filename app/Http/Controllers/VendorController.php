@@ -120,10 +120,10 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function edit($uniqueId){
+        $data = Vendor::where('unique_id', $uniqueId)->first();
+        return response()->json($data);
+     }
 
     /**
      * Update the specified resource in storage.
@@ -138,8 +138,13 @@ class VendorController extends Controller
         if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
+        $data['vendor_type'] = $request->vendor_type;
+        $data['nid_no'] = $request->nid_no;
+        $data['vendor_name'] = $request->vendor_name;
+        $data['address'] = $request->address;
+        $data['vendor_contact'] = $request->vendor_contact;
+        $data['opening_balance'] = $request->opening_balance;
 
-        $data = $request->all();
         $data['updated_by'] = Auth::user()->id;
 
         Vendor::where('unique_id', $uniqueId)->update($data);
@@ -152,11 +157,14 @@ class VendorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uniqueId)
     {
         //
         if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
+
+        Vendor::where('unique_id', $uniqueId)->delete();
+        return redirect()->back();
     }
 }

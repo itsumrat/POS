@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DNS2D;
 
 class PrintBarcodeController extends Controller
 {
@@ -20,6 +21,17 @@ class PrintBarcodeController extends Controller
         }
 
         return view('barcode.index');
+    }
+    public function generateBarcode(Request $request)
+    {
+        //
+        if (!PermissionAccess::viewAccess($this->menuId, 1)) {
+            return response()->json('Sorry');
+        }
+        
+        $returnHTML = view('barcode.barcode',['barcode'=> $request->barcode])->render();//
+        return response()->json( array('success' => true, 'html'=>$returnHTML) );
+
     }
 
     /**

@@ -22,7 +22,32 @@
         margin: 0;
         text-transform: uppercase;
   }
+	.edit_modal {
+		width: 100%;
+		background: #0000001f;
+		height: 100%;
+		z-index: 999999999;
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
 
+	.edit {
+		position: fixed;
+		top: 40px;
+		width: 70%;
+		display: none;
+		margin-left: 15%;
+	}
+
+	.edit .modal-close {
+		position: absolute;
+		z-index: 999;
+		top: -4px;
+		right: 10px;
+		font-size: 30px;
+	}
   .table {
     width: 100%;
   }

@@ -12,6 +12,6 @@ class Requisition extends Model
     protected $guarded = [];
     public function reqs()
     {
-        return $this->hasMany(RequisitionDetails::class, 'requisition_no');
+        return $this->hasMany(RequisitionDetails::class, 'requisition_id');
     }
 }

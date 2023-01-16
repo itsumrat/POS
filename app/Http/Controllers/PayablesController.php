@@ -49,7 +49,6 @@ class PayablesController extends Controller
     public function store(Request $request)
     {
         //
-
         if (!PermissionAccess::viewAccess($this->menuId, 2)) {
             return response()->json('Sorry');
         }
@@ -112,10 +111,10 @@ class PayablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function edit($uniqueId){
+        $data = Payables::where('unique_id', $uniqueId)->first();
+        return response()->json($data);
+     }
 
     /**
      * Update the specified resource in storage.
@@ -124,9 +123,25 @@ class PayablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uniqueId)
     {
         //
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
+            return response()->json('Sorry');
+        }
+
+        $data['payment_date'] = $request->payment_date;
+        $data['vendor_id'] = $request->vendor_id;
+        $data['pay_amount'] = $request->pay_amount;
+        $data['payment_type'] = $request->payment_type;
+        $data['cheque_no'] = $request->cheque_no;
+        $data['account_id'] = $request->account_id;
+        $data['description'] = $request->description;
+        $data['updated_by'] = Auth::user()->id;
+
+        Payables::where('unique_id', $uniqueId)->update($data);
+        return back();
+
     }
 
     /**
@@ -135,8 +150,14 @@ class PayablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uniqueId)
     {
         //
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
+            return response()->json('Sorry');
+        }
+
+        Payables::where('unique_id', $uniqueId)->delete();
+        return redirect()->back();
     }
 }

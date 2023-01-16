@@ -141,10 +141,10 @@ class RequisitionController extends Controller
      * @param  \App\Models\Requisition  $requisition
      * @return \Illuminate\Http\Response
      */
-    public function edit(Requisition $requisition)
-    {
-        //
-    }
+    public function edit($uniqueId){
+        $data = Requisition::with('reqs')->where('unique_id', $uniqueId)->first();
+        return response()->json($data);
+     }
 
     /**
      * Update the specified resource in storage.
@@ -156,17 +156,17 @@ class RequisitionController extends Controller
     public function update(Request $request, $uniqueId)
     {
         //
-
+//dd($request);
         if (!PermissionAccess::viewAccess($this->menuId, 3)) {
             return response()->json('Sorry');
         }
 
 
-        $data['requisition_no'] = $request->requisition_no;
-        $data['requisition_date'] = \Carbon\Carbon::now();
-        $data['unique_id'] = UniqueController::uniqueId('unique_id');
-        $data['vendor_id'] = $request->vendor_id;
-        $data['total'] = $request->total;
+        // $data['requisition_no'] = $request->requisition_no;
+        // $data['requisition_date'] = \Carbon\Carbon::now();
+        // $data['unique_id'] = UniqueController::uniqueId('unique_id');
+        // $data['vendor_id'] = $request->vendor_id;
+        $data['total'] = $request->item_total;
         $data['vat'] = $request->vat;
         $data['other_charge'] = $request->other_charge;
         $data['discount'] = $request->discount;
@@ -176,6 +176,15 @@ class RequisitionController extends Controller
         $data['updated_by'] = Auth::user()->id;
 
         Requisition::where('unique_id', $uniqueId)->update($data);
+
+        $items = $request->req_item_id;
+        $qty = $request->qty;
+        $sub_total = $request->sub_total;
+        foreach ($items as $key => $value) {
+            $reqDetail['quantity'] = $qty[$key];
+            $reqDetail['subtotal'] = $sub_total[$key];
+            RequisitionDetails::where('id', $items[$key])->update($reqDetail);
+        }
         return response()->json($data);
     }
 
@@ -202,22 +211,30 @@ class RequisitionController extends Controller
      * @param  \App\Models\Requisition  $requisition
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Requisition $requisition)
+    public function destroy($uniqueId)
     {
-        //
-        //
         if (!PermissionAccess::viewAccess($this->menuId, 4)) {
             return response()->json('Sorry');
         }
+        
+        Requisition::where('unique_id', $uniqueId)->delete();
+        return redirect()->back();
+    }
+    public function destroyDetails($uniqueId)
+    {
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
+            return response()->json('Sorry');
+        }
+
+        
+        RequisitionDetails::where('id', $uniqueId)->delete();
     }
 
     public function getItem($barcode)
     {
-        //dd($barcode);
         $item = ItemMaster::with('unit', 'size', 'color')->where('barcode', $barcode)->first();
         return $item;
 
-        //return $item;
     }
 
     public function getVat()

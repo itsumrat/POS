@@ -115,10 +115,10 @@ class ReceivablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+    public function edit($uniqueId){
+        $data = Receivables::where('unique_id', $uniqueId)->first();
+        return response()->json($data);
+     }
 
     /**
      * Update the specified resource in storage.
@@ -127,9 +127,25 @@ class ReceivablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $uniqueId)
     {
         //
+        if (!PermissionAccess::viewAccess($this->menuId, 3)) {
+            return response()->json('Sorry');
+        }
+
+        $data['payment_date'] = $request->payment_date;
+        $data['vendor_id'] = $request->vendor_id;
+        $data['receive_amount'] = $request->receive_amount;
+        $data['payment_type'] = $request->payment_type;
+        $data['cheque_no'] = $request->cheque_no;
+        $data['account_id'] = $request->account_id;
+        $data['description'] = $request->description;
+        $data['updated_by'] = Auth::user()->id;
+
+        Receivables::where('unique_id', $uniqueId)->update($data);
+        return back();
+
     }
 
     /**
@@ -138,8 +154,14 @@ class ReceivablesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($uniqueId)
     {
         //
+        if (!PermissionAccess::viewAccess($this->menuId, 4)) {
+            return response()->json('Sorry');
+        }
+
+        Receivables::where('unique_id', $uniqueId)->delete();
+        return redirect()->back();
     }
 }
